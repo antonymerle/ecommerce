@@ -1,5 +1,7 @@
 import React from "react";
-import { Product, FooterBanner, HeroBanner } from "../components";
+import Product from "../components/Product";
+import FooterBanner from "../components/FooterBanner";
+import HeroBanner from "../components/HeroBanner";
 import { client } from "@/lib/client";
 
 const Home = ({ banner, products }) => {
@@ -17,7 +19,7 @@ const Home = ({ banner, products }) => {
           <Product key={product._id} product={product} />
         ))}
       </div>
-      Footer
+      <FooterBanner footerBanner={banner && banner[0]} />
     </>
   );
 };
