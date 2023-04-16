@@ -2,6 +2,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { client } from "@/lib/client";
 import { useNextSanityImage } from "next-sanity-image";
+import { useStateContext } from "@/context/StateContext";
 
 import {
   AiOutlineMinus,
@@ -14,6 +15,8 @@ import { Product } from "@/components";
 
 const ProductDetails = ({ product, products }) => {
   const [index, setIndex] = useState(0);
+
+  const { qty, increaseQty, decreaseQty, onAdd } = useStateContext();
 
   const { image, name, details, price } = product;
   const imageProps = useNextSanityImage(client, image && [...image][index]);
@@ -58,13 +61,11 @@ const ProductDetails = ({ product, products }) => {
           <div className="quantity">
             <h3>Quantity :</h3>
             <p className="quantity-desc">
-              <span className="minus" onClick={() => console.log("click")}>
+              <span className="minus" onClick={decreaseQty}>
                 <AiOutlineMinus />
               </span>
-              <span className="num" onClick={() => console.log("click")}>
-                0
-              </span>
-              <span className="plus" onClick={() => console.log("click")}>
+              <span className="num">{qty}</span>
+              <span className="plus" onClick={() => onAdd(product, qty)}>
                 <AiOutlinePlus />
               </span>
             </p>
