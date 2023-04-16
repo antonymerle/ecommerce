@@ -24,7 +24,7 @@ const Home = ({ banner, products }) => {
   );
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const products = await client.fetch(`*[_type == "product"]`);
   const banner = await client.fetch(`*[_type == "banner"]`);
 
