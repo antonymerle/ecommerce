@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <div className="footer-container">
       <p>
-        {new Date().getFullYear} Artefacts e-commerce. Tous droits réservés.
+        {new Date().getFullYear()} Artefacts e-commerce. Tous droits réservés.
       </p>
       <p className="icons">
         <AiFillInstagram />
