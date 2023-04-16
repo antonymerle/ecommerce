@@ -10,6 +10,7 @@ import { Toast } from "react-hot-toast";
 
 import { useStateContext } from "@/context/StateContext";
 import { useNextSanityImage } from "next-sanity-image";
+import Link from "next/link";
 
 const Cart = () => {
   const cartRef = useRef();
@@ -27,6 +28,17 @@ const Cart = () => {
           <span className="heading">Your Cart</span>
           <div className="span cart-num-items">({totalQuantities} items)</div>
         </button>
+        {cartItems.length < 1 && (
+          <div className="empty-cart">
+            <AiOutlineShopping size={150} />
+            <h3>Your shopping bag is empty !</h3>
+            <Link href="/">
+              <button className="btn" onClick={() => setShowCart(false)}>
+                Continue Shopping
+              </button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
