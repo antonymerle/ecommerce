@@ -1,8 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
-import { client } from "@/lib/client";
-import { useNextSanityImage } from "next-sanity-image";
 import { useStateContext } from "@/context/StateContext";
+import { urlFor, client } from "../../lib/client";
 
 import {
   AiOutlineMinus,
@@ -19,19 +18,21 @@ const ProductDetails = ({ product, products }) => {
   const { qty, increaseQty, decreaseQty, onAdd } = useStateContext();
 
   const { image, name, details, price } = product;
-  const imageProps = useNextSanityImage(client, image && [...image][index]);
 
   return (
     <div>
       <div className="product-detail-container">
         <div>
           <div className="image-container">
-            <Image {...imageProps} className="product-detail-image" />
+            <img
+              src={urlFor(image && image[index])}
+              className="product-detail-image"
+            />
           </div>
           <div className="small-images-container">
             {image?.map((item, i) => (
-              <Image
-                {...useNextSanityImage(client, image && [...image][i])}
+              <img
+                src={urlFor(item)}
                 className={
                   i === index ? "small-image selected-image" : "small-image"
                 }

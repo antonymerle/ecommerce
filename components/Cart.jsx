@@ -9,7 +9,6 @@ import { TiDeleteOutline } from "react-icons/ti";
 import { Toast } from "react-hot-toast";
 
 import { useStateContext } from "@/context/StateContext";
-import { useNextSanityImage } from "next-sanity-image";
 import Link from "next/link";
 
 const Cart = () => {
