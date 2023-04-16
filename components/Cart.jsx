@@ -14,8 +14,13 @@ import Link from "next/link";
 
 const Cart = () => {
   const cartRef = useRef();
-  const { setShowCart, cartItems, totalPrice, totalQuantities } =
-    useStateContext();
+  const {
+    setShowCart,
+    cartItems,
+    totalPrice,
+    totalQuantities,
+    toggleCartItemQuantity,
+  } = useStateContext();
   return (
     <div className="cart-wrapper" ref={cartRef}>
       <div className="cart-container">
@@ -58,18 +63,16 @@ const Cart = () => {
                         <span
                           className="minus"
                           onClick={() =>
-                            toggleCartItemQuanitity(item._id, "dec")
+                            toggleCartItemQuantity(item._id, "dec")
                           }
                         >
                           <AiOutlineMinus />
                         </span>
-                        <span className="num" onClick="">
-                          {item.quantity}
-                        </span>
+                        <span className="num">{item.quantity}</span>
                         <span
                           className="plus"
                           onClick={() =>
-                            toggleCartItemQuanitity(item._id, "inc")
+                            toggleCartItemQuantity(item._id, "inc")
                           }
                         >
                           <AiOutlinePlus />

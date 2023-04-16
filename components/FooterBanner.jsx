@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useNextSanityImage } from "next-sanity-image";
 import { client } from "@/lib/client";
+import { urlFor } from "@/lib/client";
 
 const FooterBanner = ({
   footerBanner: {
@@ -18,7 +19,7 @@ const FooterBanner = ({
     image,
   },
 }) => {
-  const imageProps = useNextSanityImage(client, image);
+  // const imageProps = useNextSanityImage(client, image);
 
   return (
     <div className="footer-banner-container">
@@ -37,7 +38,7 @@ const FooterBanner = ({
             <button type="button">{buttonText}</button>
           </Link>
         </div>
-        <Image {...imageProps} className="footer-banner-image" />
+        <img src={urlFor(image)} className="footer-banner-image" />
       </div>
     </div>
   );
