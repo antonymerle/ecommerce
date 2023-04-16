@@ -9,9 +9,20 @@ export const stateContext = ({ children }) => {
   const [totalQuantities, setTotalQuantities] = useState();
   const [qty, setQty] = useState(1);
 
+  const increaseQty = (prevQty) => ++prevQty;
+  const decreaseQty = (prevQty) => (prevQty > 1 ? --prevQty : prevQty);
+
   return (
     <Context.Provider
-      value={{ showCart, cartItems, totalPrice, totalQuantities, qty }}
+      value={{
+        showCart,
+        cartItems,
+        totalPrice,
+        totalQuantities,
+        qty,
+        increaseQty,
+        decreaseQty,
+      }}
     >
       {children}
     </Context.Provider>
