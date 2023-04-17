@@ -20,6 +20,7 @@ const Cart = () => {
     totalPrice,
     totalQuantities,
     toggleCartItemQuantity,
+    onRemove,
   } = useStateContext();
   return (
     <div className="cart-wrapper" ref={cartRef}>
