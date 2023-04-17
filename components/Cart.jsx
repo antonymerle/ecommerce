@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import {
   AiOutlineMinus,
   AiOutlinePlus,
@@ -12,6 +12,9 @@ import { urlFor } from "@/lib/client";
 import { useStateContext } from "@/context/StateContext";
 import Link from "next/link";
 import getStripe from "@/lib/getStripe";
+// import { loadStripe } from "@stripe/stripe-js";
+
+// const stripePromise = loadStripe(process.env.NEXT_STRIPE_PUBLISHABLE_KEY);
 
 const Cart = () => {
   const cartRef = useRef();
@@ -32,16 +35,29 @@ const Cart = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({ cartItems }),
     });
-    if (response.status !== 200) {
+    if (response.status >= 400) {
       console.log(response.status);
       return;
     }
+
+    // const query = new URLSearchParams(window.location.search);
+    // if (query.get("success")) {
+    //   console.log("Order placed! You will receive an email confirmation.");
+    // }
+
+    // if (query.get("canceled")) {
+    //   console.log(
+    //     "Order canceled -- continue to shop around and checkout when you’re ready."
+    //   );
+    // }
     const data = await response.json();
 
     toast.loading("Redirecting...");
+    console.log(data.id);
 
     stripe.redirectToCheckout({ sessionId: data.id });
   };
