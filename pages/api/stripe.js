@@ -2,9 +2,6 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    console.log(req.body);
-    // console.log(req.body.cartItems[0].image[0].asset._ref);
-    // console.log(req.body.cartItems[0].name);
     try {
       const line_items = req.body.cartItems.map((item) => {
         const imgRef = item.image[0].asset._ref;
@@ -42,17 +39,10 @@ export default async function handler(req, res) {
         success_url: `${req.headers.origin}/success`,
         cancel_url: `${req.headers.origin}/?canceled=true`,
       };
-      // console.log(params.line_items[0].product_data.name);
 
       const session = await stripe.checkout.sessions.create(params);
-      console.log(session);
 
       res.status(200).json(session);
-
-      // res.redirect(303, session.url);
-      // console.log(session);
-
-      // res.redirect(303, session.url);
     } catch (error) {
       res
         .status(error.statusCode || 500)

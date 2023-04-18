@@ -6,7 +6,6 @@ import { useNextSanityImage } from "next-sanity-image";
 
 const HeroBanner = ({ heroBanner }) => {
   const imageProps = useNextSanityImage(client, heroBanner.image);
-  console.log(imageProps);
 
   return (
     <div className="hero-banner-container">

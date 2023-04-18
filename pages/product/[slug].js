@@ -1,8 +1,6 @@
 import { useState } from "react";
-import Image from "next/image";
 import { useStateContext } from "@/context/StateContext";
 import { urlFor, client } from "../../lib/client";
-
 import {
   AiOutlineMinus,
   AiOutlinePlus,

@@ -29,7 +29,6 @@ const Cart = () => {
 
   const handleCheckout = async () => {
     const stripe = await getStripe();
-    console.log(cartItems);
 
     const response = await fetch("/api/stripe", {
       method: "POST",
@@ -40,25 +39,11 @@ const Cart = () => {
       body: JSON.stringify({ cartItems }),
     });
     if (response.status >= 400) {
-      console.log(response.status);
       return;
     }
 
-    // const query = new URLSearchParams(window.location.search);
-    // if (query.get("success")) {
-    //   console.log("Order placed! You will receive an email confirmation.");
-    // }
-
-    // if (query.get("canceled")) {
-    //   console.log(
-    //     "Order canceled -- continue to shop around and checkout when you’re ready."
-    //   );
-    // }
     const data = await response.json();
-
     toast.loading("Redirecting...");
-    console.log(data.id);
-
     stripe.redirectToCheckout({ sessionId: data.id });
   };
 
