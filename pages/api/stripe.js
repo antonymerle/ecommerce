@@ -33,6 +33,7 @@ export default async function handler(req, res) {
         mode: "payment",
         payment_method_types: ["card"],
         billing_address_collection: "auto",
+        shipping_address_collection: { allowed_countries: ["FR"] },
         shipping_options: [
           { shipping_rate: process.env.STRIPE_FREE_SHIPPING },
           { shipping_rate: process.env.STRIPE_FAST_SHIPPING },
