@@ -1,5 +1,4 @@
 import Link from "next/link";
-import React from "react";
 import Image from "next/image";
 import { client } from "@/lib/client";
 import { useNextSanityImage } from "next-sanity-image";

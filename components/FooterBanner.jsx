@@ -1,8 +1,4 @@
-import React from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { useNextSanityImage } from "next-sanity-image";
-import { client } from "@/lib/client";
 import { urlFor } from "@/lib/client";
 
 const FooterBanner = ({

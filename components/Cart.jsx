@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import {
   AiOutlineMinus,
   AiOutlinePlus,
@@ -6,15 +6,11 @@ import {
   AiOutlineShopping,
 } from "react-icons/ai";
 import { TiDeleteOutline } from "react-icons/ti";
-import { Toast, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { urlFor } from "@/lib/client";
-
 import { useStateContext } from "@/context/StateContext";
 import Link from "next/link";
 import getStripe from "@/lib/getStripe";
-// import { loadStripe } from "@stripe/stripe-js";
-
-// const stripePromise = loadStripe(process.env.NEXT_STRIPE_PUBLISHABLE_KEY);
 
 const Cart = () => {
   const cartRef = useRef();

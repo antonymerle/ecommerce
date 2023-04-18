@@ -1,4 +1,3 @@
-import React from "react";
 import Product from "../components/Product";
 import FooterBanner from "../components/FooterBanner";
 import HeroBanner from "../components/HeroBanner";
