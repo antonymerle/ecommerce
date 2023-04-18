@@ -39,7 +39,7 @@ export default async function handler(req, res) {
           { shipping_rate: process.env.STRIPE_FAST_SHIPPING },
         ],
         line_items,
-        success_url: `${req.headers.origin}/?success=true`,
+        success_url: `${req.headers.origin}/success`,
         cancel_url: `${req.headers.origin}/?canceled=true`,
       };
       // console.log(params.line_items[0].product_data.name);
