@@ -1,7 +1,7 @@
 import Link from "next/link";
-import Image from "next/image";
 import { client } from "@/lib/client";
 import { useNextSanityImage } from "next-sanity-image";
+import { urlFor } from "@/lib/client";
 
 const HeroBanner = ({ heroBanner }) => {
   const imageProps = useNextSanityImage(client, heroBanner.image);
@@ -12,8 +12,8 @@ const HeroBanner = ({ heroBanner }) => {
         <p className="beats-solo">{heroBanner.smallText}</p>
         <h3>{heroBanner.midText}</h3>
         <h1>{heroBanner.largeText1}</h1>
-        <Image
-          {...imageProps}
+        <img
+          src={urlFor(heroBanner.image)}
           className="hero-banner-image"
           alt={heroBanner.product}
         />
