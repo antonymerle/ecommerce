@@ -3,32 +3,34 @@ import FooterBanner from "../components/FooterBanner";
 import HeroBanner from "../components/HeroBanner";
 import { client } from "@/lib/client";
 
-const Home = ({ banner, products }) => {
+const Home = ({ banner, products, footerBanner }) => {
   return (
     <>
       <HeroBanner heroBanner={banner.length && banner[0]} />
       <div className="products-heading">
-        <h2>Best Selling Products</h2>
-        <p>Speakers of many variations</p>
+        <h2>Meilleures ventes du moment</h2>
+        <p>Découvrez les dernières tendances</p>
       </div>
       <div className="products-container">
         {products?.map((product) => (
           <Product key={product._id} product={product} />
         ))}
       </div>
-      <FooterBanner footerBanner={banner && banner[0]} />
+      <FooterBanner footerBanner={footerBanner && footerBanner[0]} />
     </>
   );
 };
 
 export async function getServerSideProps() {
-  const products = await client.fetch(`*[_type == "product"]`);
   const banner = await client.fetch(`*[_type == "upperBanner"]`);
+  const products = await client.fetch(`*[_type == "product"]`);
+  const footerBanner = await client.fetch(`*[_type == "footerBanner"]`);
 
   return {
     props: {
       products,
       banner,
+      footerBanner,
     },
   };
 }
