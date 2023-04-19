@@ -1,11 +1,7 @@
 import Link from "next/link";
-import { client } from "@/lib/client";
-import { useNextSanityImage } from "next-sanity-image";
 import { urlFor } from "@/lib/client";
 
 const HeroBanner = ({ heroBanner }) => {
-  const imageProps = useNextSanityImage(client, heroBanner.image);
-
   return (
     <div className="hero-banner-container">
       <div>
