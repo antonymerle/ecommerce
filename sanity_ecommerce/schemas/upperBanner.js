@@ -1,6 +1,6 @@
 export default {
-  name: 'banner',
-  title: 'Banner',
+  name: 'upperBanner',
+  title: 'Upper banner',
   type: 'document',
   fields: [
     {
@@ -12,8 +12,8 @@ export default {
       },
     },
     {
-      name: 'buttonText',
-      title: 'ButtonText',
+      name: 'smallText',
+      title: 'Small text - top left',
       type: 'string',
     },
     {
@@ -22,28 +22,18 @@ export default {
       type: 'string',
     },
     {
-      name: 'desc',
-      title: 'Desc',
-      type: 'string',
-    },
-    {
-      name: 'smallText',
-      title: 'SmallText',
-      type: 'string',
-    },
-    {
       name: 'midText',
-      title: 'MidText',
+      title: 'MidText - top left',
       type: 'string',
     },
     {
-      name: 'largeText1',
-      title: 'LargeText1',
+      name: 'buttonText',
+      title: 'ButtonText - bottom right ',
       type: 'string',
     },
     {
-      name: 'largeText2',
-      title: 'LargeText2',
+      name: 'largeText',
+      title: 'LargeText - center left',
       type: 'string',
     },
     {
@@ -54,6 +44,11 @@ export default {
     {
       name: 'saleTime',
       title: 'SaleTime',
+      type: 'string',
+    },
+    {
+      name: 'desc',
+      title: 'Bottom right description',
       type: 'string',
     },
   ],

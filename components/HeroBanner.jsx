@@ -5,7 +5,7 @@ const HeroBanner = ({
   heroBanner: {
     smallText,
     midText,
-    largeText1,
+    largeText,
     product,
     buttonText,
     discount,
@@ -18,7 +18,7 @@ const HeroBanner = ({
       <div className="hero-banner-main-text">
         <p>{smallText}</p>
         <h3>{midText}</h3>
-        <h1>{largeText1}</h1>
+        <h1>{largeText}</h1>
         <Link href={`/product/${product}`}>
           <button type="button">{buttonText}</button>
         </Link>
