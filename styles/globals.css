@@ -1,3 +1,16 @@
+:root {
+  --mainColor: #eaeaea;
+  --secondaryColor: #fff;
+  --loversInJapan: #e94e77;
+  --mainText: #324d67;
+  --secondaryText: #4b5156;
+  --shadow: -1px 1px 3px -1px rgba(0, 0, 0, 0.75);
+  --themeDotBorder: #24292e;
+  --bleuClair: #c6e5d9;
+  --previewBg: rgb(251, 249, 243, 0.8);
+  --previewShadow: #f0ead6;
+}
+
 html,
 body,
 * {
@@ -35,7 +48,7 @@ a {
   font-size: 29px;
   font-weight: 600;
   margin: 60px 0px;
-  color: #f02d34;
+  color: var(--loversInJapan);
 }
 .marquee {
   position: relative;
@@ -64,7 +77,7 @@ a {
 }
 
 span.text-red {
-  -webkit-text-stroke: 1px #f02d34;
+  -webkit-text-stroke: 1px var(--loversInJapan);
   margin-left: 6px;
 }
 .logo {
@@ -88,7 +101,7 @@ span.text-red {
   right: -8px;
   font-size: 12px;
   color: #eee;
-  background-color: #f02d34;
+  background-color: var(--loversInJapan);
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -130,7 +143,7 @@ span.text-red {
 
 .hero-banner-container {
   padding: 100px 40px;
-  background-color: #dcdcdc;
+  background-color: var(--bleuClair);
   border-radius: 15px;
   position: relative;
   height: 500px;
@@ -143,14 +156,18 @@ span.text-red {
 .hero-banner-container button {
   border-radius: 15px;
   padding: 10px 16px;
-  background-color: #f02d34;
+  background-color: var(--loversInJapan);
   color: white;
   border: none;
   margin-top: 40px;
   font-size: 18px;
   font-weight: 500;
   cursor: pointer;
-  z-index: 10000 !important;
+  transition: transform 0.3s ease-in-out;
+}
+
+.hero-banner-container button:hover {
+  transform: scale(1.1, 1.1);
 }
 
 .hero-banner-container h3 {
@@ -208,7 +225,7 @@ span.text-red {
 }
 .footer-banner-container {
   padding: 100px 40px;
-  background-color: #f02d34;
+  background-color: var(--loversInJapan);
   border-radius: 15px;
   position: relative;
   height: 400px;
@@ -231,7 +248,13 @@ span.text-red {
   font-size: 18px;
   font-weight: 500;
   cursor: pointer;
+  transition: transform 0.3s ease-in-out;
 }
+
+.banner-desc button:hover {
+  transform: scale(1.1, 1.1);
+}
+
 .banner-desc .left h3 {
   font-weight: 900;
   font-size: 80px;
@@ -314,7 +337,7 @@ span.text-red {
 }
 .cart-num-items {
   margin-left: 10px;
-  color: #f02d34;
+  color: var(--loversInJapan);
 }
 .empty-cart {
   margin: 40px;
@@ -368,7 +391,7 @@ span.text-red {
 }
 .remove-item {
   font-size: 24px;
-  color: #f02d34;
+  color: var(--loversInJapan);
   cursor: pointer;
   background: transparent;
   border: none;
@@ -395,7 +418,7 @@ span.text-red {
   margin-top: 10px;
   margin-top: 40px;
   text-transform: uppercase;
-  background-color: #f02d34;
+  background-color: var(--loversInJapan);
   color: #fff;
   cursor: pointer;
   transform: scale(1, 1);
@@ -422,7 +445,7 @@ span.text-red {
   transition: 0.3s ease-in-out;
 }
 .product-detail-image:hover {
-  background-color: #f02d34;
+  background-color: var(--loversInJapan);
 }
 .small-images-container {
   display: flex;
@@ -438,10 +461,10 @@ span.text-red {
 }
 
 .selected-image {
-  background-color: #f02d34;
+  background-color: var(--loversInJapan);
 }
 .reviews {
-  color: #f02d34;
+  color: var(--loversInJapan);
   margin-top: 10px;
   display: flex;
   gap: 5px;
@@ -462,7 +485,7 @@ span.text-red {
   font-weight: 700;
   font-size: 26px;
   margin-top: 30px;
-  color: #f02d34;
+  color: var(--loversInJapan);
 }
 .price .old-price,
 .product-price .old-price,
@@ -482,12 +505,12 @@ span.text-red {
 }
 .buttons .add-to-cart {
   padding: 10px 20px;
-  border: 1px solid #f02d34;
+  border: 1px solid var(--loversInJapan);
   margin-top: 40px;
   font-size: 18px;
   font-weight: 500;
   background-color: white;
-  color: #f02d34;
+  color: var(--loversInJapan);
   cursor: pointer;
   width: 200px;
   transform: scale(1, 1);
@@ -500,7 +523,7 @@ span.text-red {
   width: 200px;
 
   padding: 10px 20px;
-  background-color: #f02d34;
+  background-color: var(--loversInJapan);
   color: white;
   border: none;
   margin-top: 40px;
@@ -524,7 +547,7 @@ span.text-red {
 }
 .quantity-desc .minus {
   border-right: 1px solid gray;
-  color: #f02d34;
+  color: var(--loversInJapan);
 }
 .quantity-desc .num {
   border-right: 1px solid gray;
@@ -552,7 +575,7 @@ span.text-red {
 }
 .max-qty {
   font-weight: 500;
-  color: #f02d34;
+  color: var(--loversInJapan);
 }
 .success-wrapper,
 .cancel-wrapper {
@@ -564,7 +587,7 @@ span.text-red {
   width: 1000px;
   margin: auto;
   margin-top: 160px;
-  background-color: #dcdcdc;
+  background-color: var(--bleuClair);
   padding: 50px;
   border-radius: 15px;
   display: flex;
@@ -602,7 +625,7 @@ span.text-red {
 }
 .success .description .email {
   margin-left: 5px;
-  color: #f02d34;
+  color: var(--loversInJapan);
 }
 .product-max-qty {
   margin-top: 10px;
