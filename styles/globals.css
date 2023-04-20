@@ -24,6 +24,10 @@ a {
   text-decoration: none;
 }
 
+ul {
+  list-style: none;
+}
+
 .main-container {
   display: flex;
   flex-direction: column;
@@ -151,7 +155,7 @@ a {
 
 .hero-banner-container button {
   border-radius: 10px;
-  padding: 17px 20px;
+  padding: 17px 24px;
   background-color: var(--mainColor);
   color: white;
   border: none;
@@ -234,24 +238,79 @@ a {
   font-size: 16px;
   font-weight: 200;
 }
+
+/* FOOTER BANNER */
+
 .footer-banner-container {
-  padding: 100px 40px;
+  display: flex;
+  padding: 4rem 3rem;
   background-color: var(--mainColor);
   border-radius: 15px;
-  position: relative;
   height: 400px;
   line-height: 1;
   color: white;
   width: 100%;
   margin-top: 120px;
 }
+
+.footer-main-text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100%;
+  width: 33%;
+}
+
+.footer-main-text-container h3 {
+  font-size: 6rem;
+  font-weight: 800;
+  padding-bottom: 1rem;
+}
+
+.footer-main-text-container p {
+  font-size: 1.2rem;
+}
+
+.footer-image-container {
+  width: 33%;
+  height: 100%;
+  position: relative;
+}
+
+.footer-banner-image {
+  position: absolute;
+  max-width: 100%;
+  height: auto;
+  object-fit: fill;
+  overflow: hidden;
+  top: -77px;
+}
+
+.footer-secondary-text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 34%;
+  height: 100%;
+}
+
+.footer-secondary-text-container h3 {
+  font-size: 4rem;
+  font-weight: 800;
+}
+
+.footer-secondary-text-container p {
+  font-size: 1.2rem;
+}
+
 .banner-desc {
   display: flex;
   justify-content: space-between;
 }
-.banner-desc button {
-  border-radius: 15px;
-  padding: 10px 16px;
+.footer-secondary-text-container button {
+  border-radius: 10px;
+  padding: 17px 24px;
   background-color: white;
   color: var(--mainText);
   border: none;
@@ -262,37 +321,12 @@ a {
   transition: transform 0.3s ease-in-out;
 }
 
-.banner-desc button:hover {
+.footer-secondary-text-container button:hover {
   transform: scale(1.1, 1.1);
 }
 
-.banner-desc .left h3 {
-  font-weight: 900;
-  font-size: 80px;
-  margin-left: 25px;
-}
-.banner-desc .left p {
-  margin: 18px;
-}
-.footer-banner-image {
-  position: absolute;
-  top: -25%;
-  left: 25%;
-}
-.banner-desc .right {
-  line-height: 1.4;
-}
-.banner-desc .right h3 {
-  font-weight: 800;
-  font-size: 60px;
-}
-.banner-desc .right p {
-  font-size: 18px;
-}
-.banner-desc .right .company-desc {
-  font-size: 14px;
-  font-weight: 300;
-}
+/* END FOOTER BANNER */
+
 .cart-wrapper {
   width: 100vw;
   background: rgba(0, 0, 0, 0.5);
@@ -321,13 +355,12 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+
   justify-content: center;
 }
 .footer-container .icons {
   font-size: 30px;
   display: flex;
-  gap: 10px;
 }
 .cart-heading {
   display: flex;
@@ -658,6 +691,7 @@ a {
     height: auto;
     left: 50%;
     top: 6%;
+    object-fit: cover;
   }
   .banner-desc .left h3 {
     font-weight: 900;
