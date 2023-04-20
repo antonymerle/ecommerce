@@ -18,7 +18,7 @@ export default {
     },
     {
       name: 'product',
-      title: 'Product',
+      title: 'Product slug',
       type: 'string',
     },
     {
