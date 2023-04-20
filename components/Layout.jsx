@@ -1,10 +1,13 @@
 import Head from "next/head";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
+import style from "../styles/Layout.module.css";
+
+const { mainContainer, layout } = style;
 
 const Layout = ({ children }) => {
   return (
-    <div className="layout">
+    <div className={layout}>
       <Head>
         <title>Antony Merle boutique en ligne e-commerce</title>
         <meta
@@ -33,7 +36,7 @@ const Layout = ({ children }) => {
       <header>
         <Navbar />
       </header>
-      <main className="main-container">{children}</main>
+      <main className={mainContainer}>{children}</main>
       <footer>
         <Footer />
       </footer>

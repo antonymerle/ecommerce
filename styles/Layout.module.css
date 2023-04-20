@@ -1,0 +1,10 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 1400px;
+  margin: auto;
+  width: 100%;
+}
+.layout {
+  padding: 10px;
+}

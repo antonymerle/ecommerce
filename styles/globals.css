@@ -28,17 +28,6 @@ ul {
   list-style: none;
 }
 
-.main-container {
-  display: flex;
-  flex-direction: column;
-  max-width: 1400px;
-  margin: auto;
-  width: 100%;
-}
-.layout {
-  padding: 10px;
-}
-
 .marquee-text {
   font-size: 29px;
   font-weight: 600;
