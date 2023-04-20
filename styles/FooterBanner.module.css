@@ -1,0 +1,79 @@
+.container {
+  display: flex;
+  padding: 4rem 3rem;
+  background-color: var(--mainColor);
+  border-radius: 15px;
+  height: 400px;
+  line-height: 1;
+  color: white;
+  width: 100%;
+  margin-top: 120px;
+}
+
+.mainTextContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100%;
+  width: 33%;
+}
+
+.mainTextContainer h3 {
+  font-size: 6rem;
+  font-weight: 800;
+  padding-bottom: 1rem;
+}
+
+.mainTextContainer p {
+  font-size: 1.2rem;
+}
+
+.imageContainer {
+  width: 33%;
+  height: 100%;
+  position: relative;
+}
+
+.imageContainer img {
+  position: absolute;
+  max-width: 100%;
+  height: auto;
+  object-fit: fill;
+  overflow: hidden;
+  top: -77px;
+}
+
+.secondaryTextContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 34%;
+  height: 100%;
+}
+
+.secondaryTextContainer h3 {
+  font-size: 4rem;
+  font-weight: 800;
+}
+
+.secondaryTextContainer p {
+  font-size: 1.2rem;
+}
+
+.secondaryTextContainer button {
+  border-radius: 10px;
+  padding: 17px 24px;
+  background-color: white;
+  color: var(--mainText);
+  border: none;
+  margin-top: 40px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.secondaryTextContainer button:hover {
+  transform: scale(1.1, 1.1);
+}

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { urlFor } from "@/lib/client";
+import styles from "../styles/FooterBanner.module.css";
 
 const FooterBanner = ({
   footerBanner: {
@@ -16,17 +17,17 @@ const FooterBanner = ({
   },
 }) => {
   return (
-    <div className="footer-banner-container">
-      <div className="footer-main-text-container">
+    <div className={styles.container}>
+      <div className={styles.mainTextContainer}>
         <p>{discount}</p>
         <h3>{largeText1}</h3>
         <h3>{largeText2}</h3>
         <p>{saleTime}</p>
       </div>
-      <div className="footer-image-container">
-        <img src={urlFor(image)} className="footer-banner-image" />
+      <div className={styles.imageContainer}>
+        <img src={urlFor(image)} />
       </div>
-      <div className="footer-secondary-text-container">
+      <div className={styles.secondaryTextContainer}>
         <p>{smallText}</p>
         <h3>{midText}</h3>
         <p>{desc}</p>
