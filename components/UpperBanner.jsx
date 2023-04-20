@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { urlFor } from "@/lib/client";
+import styles from "../styles/UpperBanner.module.css";
 
 const UpperBanner = ({
   heroBanner: {
@@ -14,8 +15,8 @@ const UpperBanner = ({
   },
 }) => {
   return (
-    <div className="hero-banner-container">
-      <div className="hero-banner-main-text">
+    <div className={styles.container}>
+      <div className={styles.mainText}>
         <p>{smallText}</p>
         <h3>{midText}</h3>
         <h1>{largeText}</h1>
@@ -24,9 +25,9 @@ const UpperBanner = ({
         </Link>
       </div>
 
-      <div className="hero-banner-image-container">
-        <img src={urlFor(image)} className="hero-banner-image" alt={product} />
-        <div className="desc">
+      <div className={styles.imageContainer}>
+        <img src={urlFor(image)} className={styles.image} alt={product} />
+        <div className={styles.description}>
           <h5>{discount}</h5>
           <p>{desc}</p>
         </div>
