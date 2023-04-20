@@ -15,8 +15,6 @@ const FooterBanner = ({
     image,
   },
 }) => {
-  // const imageProps = useNextSanityImage(client, image);
-
   return (
     <div className="footer-banner-container">
       <div className="footer-main-text-container">
