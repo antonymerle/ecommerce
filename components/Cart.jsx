@@ -52,16 +52,18 @@ const Cart = () => {
           onClick={() => setShowCart(false)}
         >
           <AiOutlineLeft />
-          <span className="heading">Your Cart</span>
-          <div className="span cart-num-items">({totalQuantities} items)</div>
+          <span className="heading">Votre panier</span>
+          <div className="span cart-num-items">
+            ({totalQuantities} {totalQuantities > 1 ? "articles" : "article"})
+          </div>
         </button>
         {cartItems.length < 1 && (
           <div className="empty-cart">
             <AiOutlineShopping size={150} />
-            <h3>Your shopping bag is empty !</h3>
+            <h3>Votre panier est vide !</h3>
             <Link href="/">
               <button className="btn" onClick={() => setShowCart(false)}>
-                Continue Shopping
+                Poursuivre mes achats
               </button>
             </Link>
           </div>

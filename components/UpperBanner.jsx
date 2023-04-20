@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { urlFor } from "@/lib/client";
 
-const HeroBanner = ({
+const UpperBanner = ({
   heroBanner: {
     smallText,
     midText,
@@ -35,4 +35,4 @@ const HeroBanner = ({
   );
 };
 
-export default HeroBanner;
+export default UpperBanner;
