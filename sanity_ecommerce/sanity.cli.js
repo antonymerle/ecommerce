@@ -1,15 +1,13 @@
 import {defineCliConfig} from 'sanity/cli'
 import {getStudioEnvironmentVariables} from 'sanity/cli'
 
-console.log(
-  getStudioEnvironmentVariables({
-    envFile: {
-      mode: 'production',
-      envDir: '.',
-      prefix: 'process.env.',
-    },
-  })
-)
+getStudioEnvironmentVariables({
+  envFile: {
+    mode: 'production',
+    envDir: '.',
+    prefix: 'process.env.',
+  },
+})
 
 export default defineCliConfig({
   api: {
