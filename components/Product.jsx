@@ -1,20 +1,22 @@
 import Link from "next/link";
-
 import { urlFor } from "@/lib/client";
+import style from "../styles/Product.module.css";
+
+const { productCard, productImage, productName, productPrice } = style;
 
 const Product = ({ product: { image, name, slug, price } }) => {
   return (
     <div>
       <Link href={`/product/${slug.current}`}>
-        <div className="product-card">
+        <div className={productCard}>
           <img
             src={urlFor(image && image[0])}
-            className="product-image"
+            className={productImage}
             width={250}
             height={250}
           />
-          <p className="product-name">{name}</p>
-          <p className="product-price">{price}€</p>
+          <p className={productName}>{name}</p>
+          <p className={productPrice}>{price}€</p>
         </div>
       </Link>
     </div>
