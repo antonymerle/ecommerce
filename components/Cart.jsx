@@ -61,8 +61,7 @@ const Cart = () => {
           onClick={() => setShowCart(false)}
         >
           <AiOutlineLeft />
-          {/* TODO : remove class */}
-          <span className="heading">Votre panier</span>
+          <span>Votre panier</span>
           <div className={cartNumItems}>
             ({totalQuantities} {totalQuantities > 1 ? "articles" : "article"})
           </div>
