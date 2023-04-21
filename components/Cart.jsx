@@ -1,10 +1,5 @@
 import { useRef } from "react";
-import {
-  AiOutlineMinus,
-  AiOutlinePlus,
-  AiOutlineLeft,
-  AiOutlineShopping,
-} from "react-icons/ai";
+import { AiOutlineLeft, AiOutlineShopping } from "react-icons/ai";
 import { TiDeleteOutline } from "react-icons/ti";
 import { toast } from "react-hot-toast";
 import { urlFor } from "@/lib/client";
@@ -12,6 +7,7 @@ import { useStateContext } from "@/context/StateContext";
 import Link from "next/link";
 import getStripe from "@/lib/getStripe";
 import styles from "../styles/Cart.module.css";
+import Quantity from "./Quantity";
 
 const {
   cartWrapper,
@@ -23,10 +19,6 @@ const {
   productClass,
   cartProductImage,
   itemDesc,
-  quantityDesc,
-  minus,
-  num,
-  plus,
   removeItem,
   top,
   flex,
@@ -37,14 +29,8 @@ const {
 
 const Cart = () => {
   const cartRef = useRef();
-  const {
-    setShowCart,
-    cartItems,
-    totalPrice,
-    totalQuantities,
-    toggleCartItemQuantity,
-    onRemove,
-  } = useStateContext();
+  const { setShowCart, cartItems, totalPrice, totalQuantities, onRemove } =
+    useStateContext();
 
   const handleCheckout = async () => {
     const stripe = await getStripe();
@@ -107,25 +93,7 @@ const Cart = () => {
                   </div>
                   <div className={`${flex} ${bottom}`}>
                     <div>
-                      <p className={quantityDesc}>
-                        <span
-                          className={minus}
-                          onClick={() =>
-                            toggleCartItemQuantity(item._id, "dec")
-                          }
-                        >
-                          <AiOutlineMinus />
-                        </span>
-                        <span className={num}>{item.quantity}</span>
-                        <span
-                          className={plus}
-                          onClick={() =>
-                            toggleCartItemQuantity(item._id, "inc")
-                          }
-                        >
-                          <AiOutlinePlus />
-                        </span>
-                      </p>
+                      <Quantity context="cart" cartItem={item} />
                     </div>
                     <button
                       type="button"

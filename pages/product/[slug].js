@@ -9,6 +9,7 @@ import {
 } from "react-icons/ai";
 
 import { Product } from "@/components";
+import Quantity from "@/components/Quantity";
 
 const ProductDetails = ({ product, products }) => {
   const [index, setIndex] = useState(0);
@@ -63,15 +64,7 @@ const ProductDetails = ({ product, products }) => {
 
           <div className="quantity">
             <h3>Quantité :</h3>
-            <p className="quantity-desc">
-              <span className="minus" onClick={decQty}>
-                <AiOutlineMinus />
-              </span>
-              <span className="num">{qty}</span>
-              <span className="plus" onClick={incQty}>
-                <AiOutlinePlus />
-              </span>
-            </p>
+            <Quantity context="slug" />
           </div>
 
           <div className="buttons">
