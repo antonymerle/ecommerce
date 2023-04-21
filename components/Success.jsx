@@ -5,7 +5,7 @@ import { useStateContext } from "@/context/StateContext";
 import { runFireworks } from "@/lib/utils";
 import style from "../styles/Success.module.css";
 
-const { successWrapper, success, icon, emailMsg, description } = style;
+const { successWrapper, success, icon, emailMsg, description, email } = style;
 
 const Success = () => {
   const { setCartItems, setTotalPrice, setTotalQuantities } = useStateContext();
@@ -26,7 +26,7 @@ const Success = () => {
         <p className={emailMsg}>Un email de confirmation vous a été expédié.</p>
         <p className={description}>
           Pour toute question, n'hésitez pas à nous écrire à cette adresse :{" "}
-          <a href="mailto:order@example.com" className={emailMsg}>
+          <a href="mailto:order@example.com" className={email}>
             order@example.com
           </a>
         </p>
