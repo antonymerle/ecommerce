@@ -17,9 +17,12 @@ const Success = () => {
   return (
     <div className="success-wrapper">
       <div className="success">
-        <p className="icon">
-          <BsBagCheckFill />
-        </p>
+        <BsBagCheckFill
+          size="12rem"
+          color="green"
+          style={{ padding: "2rem" }}
+        />
+
         <h2>Merci pour votre commande !</h2>
         <p className="email-msg">
           Un email de confirmation vous a été expédié.
