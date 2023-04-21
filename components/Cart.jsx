@@ -11,6 +11,29 @@ import { urlFor } from "@/lib/client";
 import { useStateContext } from "@/context/StateContext";
 import Link from "next/link";
 import getStripe from "@/lib/getStripe";
+import styles from "../styles/Cart.module.css";
+
+const {
+  cartWrapper,
+  cartContainer,
+  cartHeading,
+  cartNumItems,
+  emptyCart,
+  productContainer,
+  productClass,
+  cartProductImage,
+  itemDesc,
+  quantityDesc,
+  minus,
+  num,
+  plus,
+  removeItem,
+  top,
+  flex,
+  bottom,
+  cartBottom,
+  total,
+} = styles;
 
 const Cart = () => {
   const cartRef = useRef();
@@ -44,21 +67,22 @@ const Cart = () => {
   };
 
   return (
-    <div className="cart-wrapper" ref={cartRef}>
-      <div className="cart-container">
+    <div className={cartWrapper} ref={cartRef}>
+      <div className={cartContainer}>
         <button
           type="button"
-          className="cart-heading"
+          className={cartHeading}
           onClick={() => setShowCart(false)}
         >
           <AiOutlineLeft />
+          {/* TODO : remove class */}
           <span className="heading">Votre panier</span>
-          <div className="span cart-num-items">
+          <div className={cartNumItems}>
             ({totalQuantities} {totalQuantities > 1 ? "articles" : "article"})
           </div>
         </button>
         {cartItems.length < 1 && (
-          <div className="empty-cart">
+          <div className={emptyCart}>
             <AiOutlineShopping size={150} />
             <h3>Votre panier est vide !</h3>
             <Link href="/">
@@ -68,33 +92,33 @@ const Cart = () => {
             </Link>
           </div>
         )}
-        <div className="product-container">
+        <div className={productContainer}>
           {cartItems.length >= 1 &&
             cartItems.map((item) => (
-              <div className="product" key={item._id}>
+              <div className={productClass} key={item._id}>
                 <img
                   src={urlFor(item?.image[0])}
-                  className="cart-product-image"
+                  className={cartProductImage}
                 />
-                <div className="item-desc">
-                  <div className="flex top">
+                <div className={itemDesc}>
+                  <div className={`${flex} ${top}`}>
                     <h5>{item.name}</h5>
                     <h4>${item.price}</h4>
                   </div>
-                  <div className="flex bottom">
+                  <div className={`${flex} ${bottom}`}>
                     <div>
-                      <p className="quantity-desc">
+                      <p className={quantityDesc}>
                         <span
-                          className="minus"
+                          className={minus}
                           onClick={() =>
                             toggleCartItemQuantity(item._id, "dec")
                           }
                         >
                           <AiOutlineMinus />
                         </span>
-                        <span className="num">{item.quantity}</span>
+                        <span className={num}>{item.quantity}</span>
                         <span
-                          className="plus"
+                          className={plus}
                           onClick={() =>
                             toggleCartItemQuantity(item._id, "inc")
                           }
@@ -105,7 +129,7 @@ const Cart = () => {
                     </div>
                     <button
                       type="button"
-                      className="remove-item"
+                      className={removeItem}
                       onClick={() => onRemove(item)}
                     >
                       <TiDeleteOutline />
@@ -116,14 +140,14 @@ const Cart = () => {
             ))}
         </div>
         {cartItems.length >= 1 && (
-          <div className="cart-bottom">
-            <div className="total">
-              <h3>Subtotal:</h3>
-              <h3>${totalPrice}</h3>
+          <div className={cartBottom}>
+            <div className={total}>
+              <h3>Total:</h3>
+              <h3>{totalPrice}€</h3>
             </div>
             <div className="btn-container">
               <button type="button" className="btn" onClick={handleCheckout}>
-                Pay with Stripe
+                Payer
               </button>
             </div>
           </div>
