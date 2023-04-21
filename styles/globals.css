@@ -185,12 +185,12 @@ ul {
   margin-top: 30px;
   color: var(--mainColor);
 }
-.price .old-price,
+/* .price .old-price,
 .product-price .old-price,
 .price .old-price {
   color: gray;
   text-decoration: line-through;
-}
+} */
 .product-detail-desc .quantity {
   display: flex;
   gap: 20px;
@@ -250,14 +250,6 @@ ul {
   justify-content: center;
   gap: 15px;
   margin-top: 20px;
-}
-.max-qty {
-  font-weight: 500;
-  color: var(--mainColor);
-}
-
-.product-max-qty {
-  margin-top: 10px;
 }
 
 @media screen and (max-width: 800px) {
