@@ -43,6 +43,7 @@ const ProductDetails = ({ product, products }) => {
 
         <div className="product-detail-desc">
           <h1>{name}</h1>
+          {/* TODO : make reviews dynamic */}
           <div className="reviews">
             <div>
               <AiFillStar />
