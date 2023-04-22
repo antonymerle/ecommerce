@@ -8,8 +8,9 @@ const { quantityDesc, minus, num, plus } = styles;
 // context parameter is either "cart" or "slug"
 // If context === "cart", cartItem must be provided
 const Quantity = ({ context, cartItem }) => {
+  const { qty, decQty, incQty, toggleCartItemQuantity } = useStateContext();
+
   if (context === "cart" && cartItem) {
-    const { toggleCartItemQuantity } = useStateContext();
     return (
       <p className={quantityDesc}>
         <span
@@ -28,7 +29,6 @@ const Quantity = ({ context, cartItem }) => {
       </p>
     );
   } else if (context === "slug") {
-    const { qty, decQty, incQty } = useStateContext();
     return (
       <p className={quantityDesc}>
         <span className={minus} onClick={decQty}>
