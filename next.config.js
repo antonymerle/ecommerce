@@ -11,6 +11,9 @@ const nextConfig = {
     SANITY_PROJECT_ID: process.env.SANITY_PROJECT_ID,
     SANITY_TITLE: process.env.SANITY_TITLE,
     SANITY_DATASET: process.env.SANITY_DATASET,
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    GOOGLE_ID: process.env.GOOGLE_ID,
+    GOOGLE_SECRET: process.env.GOOGLE_SECRET,
   },
 };
 
