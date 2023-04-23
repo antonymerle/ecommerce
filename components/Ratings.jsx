@@ -1,14 +1,9 @@
 import { useState } from "react";
 import { MdStar, MdStarOutline, MdStarHalf } from "react-icons/md";
+import { computeMean } from "@/lib/utils";
 import style from "../styles/Ratings.module.css";
 
 const { ratings } = style;
-
-const computeMean = (arr) => {
-  if (!arr) return 0;
-  const mean = arr.reduce((sum, current) => sum + current, 0) / arr.length;
-  return Math.round(mean * 10) / 10;
-};
 
 const Ratings = ({ product }) => {
   const mean = computeMean(product.ratings);
@@ -24,7 +19,6 @@ const Ratings = ({ product }) => {
       stars.push(<MdStarOutline />);
     }
   }
-  console.log(mean);
 
   return (
     <div className={ratings}>
