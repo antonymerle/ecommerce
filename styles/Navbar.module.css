@@ -10,7 +10,8 @@
   font-size: 18px;
 }
 
-.cartIcon {
+.cartIcon,
+.userIcon {
   font-size: 25px;
   color: gray;
   cursor: pointer;
