@@ -4,8 +4,6 @@ import UpperBanner from "../components/UpperBanner";
 import { client } from "@/lib/client";
 
 const Home = ({ banner, products, footerBanner }) => {
-  console.log(products);
-
   return (
     <>
       <UpperBanner heroBanner={banner.length && banner[0]} />
