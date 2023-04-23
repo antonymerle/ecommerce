@@ -12,11 +12,11 @@ const Ratings = ({ product }) => {
 
   for (let i = 0; i < STAR_MAX; i++) {
     if (i < mean && mean < i + 1) {
-      stars.push(<MdStarHalf />);
+      stars.push(<MdStarHalf key={i} />);
     } else if (i < mean) {
-      stars.push(<MdStar />);
+      stars.push(<MdStar key={i} />);
     } else {
-      stars.push(<MdStarOutline />);
+      stars.push(<MdStarOutline key={i} />);
     }
   }
 
