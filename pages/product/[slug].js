@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useStateContext } from "@/context/StateContext";
 import { urlFor, client } from "../../lib/client";
-import { MdStar, MdStarOutline, MdStarHalf } from "react-icons/md";
-
+import Ratings from "@/components/Ratings";
 import { Product } from "@/components";
 import Quantity from "@/components/Quantity";
 
@@ -44,16 +43,7 @@ const ProductDetails = ({ product, products }) => {
         <div className="product-detail-desc">
           <h1>{name}</h1>
           {/* TODO : make reviews dynamic */}
-          <div className="reviews">
-            <div>
-              <MdStar />
-              <MdStar />
-              <MdStar />
-              <MdStar />
-              <MdStarOutline />
-            </div>
-            <p>(20)</p>
-          </div>
+          <Ratings product={product} />
           <h4>Détails:</h4>
           <p>{details}</p>
           <p className="price">${price}</p>

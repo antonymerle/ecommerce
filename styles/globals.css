@@ -162,13 +162,7 @@ ul {
 .selected-image {
   background-color: var(--mainColor);
 }
-.reviews {
-  color: var(--mainColor);
-  margin-top: 10px;
-  display: flex;
-  gap: 5px;
-  align-items: center;
-}
+
 .product-detail-desc {
   padding-right: 2rem;
 }
@@ -180,10 +174,7 @@ ul {
   margin-top: 10px;
   padding-right: 2rem;
 }
-.reviews p {
-  color: var(--mainText);
-  margin-top: 0px;
-}
+
 .product-detail-desc .price {
   font-weight: 700;
   font-size: 26px;

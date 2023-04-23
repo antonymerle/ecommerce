@@ -1,0 +1,12 @@
+.ratings {
+  color: var(--mainColor);
+  margin-top: 10px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.ratings p {
+  color: var(--mainText);
+  margin-top: 0px;
+}
