@@ -1,0 +1,37 @@
+.userModal {
+  display: flex;
+}
+
+.userIcon {
+  font-size: 25px;
+  color: gray;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.4s ease;
+  border: none;
+  background-color: transparent;
+}
+
+.userIconConnected {
+  font-size: 25px;
+  color: var(--mainColor);
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.4s ease;
+  border: none;
+  background-color: transparent;
+}
+.connectbtn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  text-overflow: ellipsis;
+  padding: 0 15px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: gray;
+  transition: 0.3s;
+}
+.connectbtn:hover {
+  color: var(--mainColor);
+}
