@@ -15,6 +15,7 @@ body,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   box-sizing: border-box;
 }
+
 ::-webkit-scrollbar {
   width: 0px;
 }
@@ -127,6 +128,7 @@ ul {
 }
 .product-detail-container {
   display: flex;
+  width: 100%;
   gap: 40px;
   margin: 40px;
   margin-top: 60px;
@@ -136,7 +138,6 @@ ul {
 .product-detail-image {
   border-radius: 15px;
   background-color: var(--thirdColor);
-
   width: 400px;
   height: 400px;
   cursor: pointer;
@@ -168,12 +169,16 @@ ul {
   gap: 5px;
   align-items: center;
 }
+.product-detail-desc {
+  padding-right: 2rem;
+}
 
 .product-detail-desc h4 {
   margin-top: 10px;
 }
 .product-detail-desc p {
   margin-top: 10px;
+  padding-right: 2rem;
 }
 .reviews p {
   color: var(--mainText);
@@ -252,7 +257,7 @@ ul {
   margin-top: 20px;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 768px) {
   .hero-banner-container {
     height: 560px;
   }
@@ -310,11 +315,12 @@ ul {
     bottom: 60px;
   }
   .product-detail-container {
+    width: 100%;
     flex-wrap: wrap;
   }
   .product-detail-container .product-detail-image {
-    width: 350px;
-    height: 350px;
+    width: 300px;
+    height: 300px;
   }
   .cart-container {
     width: 415px;
