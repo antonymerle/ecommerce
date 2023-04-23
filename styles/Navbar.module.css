@@ -1,17 +1,26 @@
 .navbarContainer {
   display: flex;
+  height: 50px;
   justify-content: space-between;
+  align-items: center;
   margin: 0.5rem 1rem;
   position: relative;
 }
 
 .logo {
-  color: var(--secondaryText);
+  color: var(--mainText);
   font-size: 18px;
+  font-weight: 600;
 }
 
-.cartIcon,
-.userIcon {
+.navIcons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 150px;
+}
+
+.cartIcon {
   font-size: 25px;
   color: gray;
   cursor: pointer;
