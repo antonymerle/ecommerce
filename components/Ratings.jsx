@@ -11,15 +11,24 @@ const computeMean = (arr) => {
 };
 
 const Ratings = ({ product }) => {
+  const mean = computeMean(product.ratings);
+  const STAR_MAX = 5;
+  let stars = [];
+
+  for (let i = 0; i < STAR_MAX; i++) {
+    if (i < mean && mean < i + 1) {
+      stars.push(<MdStarHalf />);
+    } else if (i < mean) {
+      stars.push(<MdStar />);
+    } else {
+      stars.push(<MdStarOutline />);
+    }
+  }
+  console.log(mean);
+
   return (
     <div className={ratings}>
-      <div>
-        <MdStar />
-        <MdStar />
-        <MdStar />
-        <MdStar />
-        <MdStarOutline />
-      </div>
+      <div>{stars}</div>
       <p>{computeMean(product.ratings)}</p>
     </div>
   );
