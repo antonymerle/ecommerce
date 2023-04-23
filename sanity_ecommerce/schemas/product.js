@@ -18,5 +18,6 @@ export default {
     {name: 'promotion', title: 'Promotion', type: 'number'},
     {name: 'oldPrice', title: 'Old Price', type: 'number'},
     {name: 'details', title: 'Details', type: 'string'},
+    {name: 'ratings', title: 'Ratings', type: 'array', of: [{type: 'number'}]},
   ],
 }

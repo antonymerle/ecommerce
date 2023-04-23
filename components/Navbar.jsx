@@ -2,6 +2,7 @@ import Link from "next/link";
 import { AiOutlineShopping } from "react-icons/ai";
 import Cart from "./Cart";
 import { useStateContext } from "@/context/StateContext";
+import LoginBtn from "./LoginBtn";
 import styles from "../styles/Navbar.module.css";
 
 const Navbar = () => {
@@ -12,6 +13,7 @@ const Navbar = () => {
       <p className={styles.logo}>
         <Link href="/">Artefacts e-commerce</Link>
       </p>
+      <LoginBtn />
       <button
         type="button"
         className={styles.cartIcon}

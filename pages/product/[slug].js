@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useStateContext } from "@/context/StateContext";
 import { urlFor, client } from "../../lib/client";
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { MdStar, MdStarOutline, MdStarHalf } from "react-icons/md";
 
 import { Product } from "@/components";
 import Quantity from "@/components/Quantity";
@@ -46,11 +46,11 @@ const ProductDetails = ({ product, products }) => {
           {/* TODO : make reviews dynamic */}
           <div className="reviews">
             <div>
-              <AiFillStar />
-              <AiFillStar />
-              <AiFillStar />
-              <AiFillStar />
-              <AiOutlineStar />
+              <MdStar />
+              <MdStar />
+              <MdStar />
+              <MdStar />
+              <MdStarOutline />
             </div>
             <p>(20)</p>
           </div>
