@@ -4,6 +4,8 @@ import UpperBanner from "../components/UpperBanner";
 import { client } from "@/lib/client";
 
 const Home = ({ banner, products, footerBanner }) => {
+  console.log(products);
+
   return (
     <>
       <UpperBanner heroBanner={banner.length && banner[0]} />
@@ -23,7 +25,9 @@ const Home = ({ banner, products, footerBanner }) => {
 
 export async function getServerSideProps() {
   const banner = await client.fetch(`*[_type == "upperBanner"]`);
-  const products = await client.fetch(`*[_type == "product"]`);
+  const products = await client.fetch(
+    `*[_type == "product" && !(_id in path("drafts.**"))]`
+  );
   const footerBanner = await client.fetch(`*[_type == "footerBanner"]`);
 
   return {
