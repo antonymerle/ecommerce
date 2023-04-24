@@ -10,3 +10,7 @@
   color: var(--mainText);
   margin-top: 0px;
 }
+
+.gold {
+  color: gold;
+}
