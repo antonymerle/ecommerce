@@ -2,8 +2,11 @@ import Product from "../components/Product";
 import FooterBanner from "../components/FooterBanner";
 import UpperBanner from "../components/UpperBanner";
 import { client } from "@/lib/client";
+import { authOptions } from "./api/auth/[...nextauth]";
+import { getServerSession } from "next-auth/next";
 
-const Home = ({ banner, products, footerBanner }) => {
+const Home = ({ banner, products, footerBanner, userSession }) => {
+  console.log(userSession);
   return (
     <>
       <UpperBanner heroBanner={banner.length && banner[0]} />
@@ -21,18 +24,26 @@ const Home = ({ banner, products, footerBanner }) => {
   );
 };
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
   const banner = await client.fetch(`*[_type == "upperBanner"]`);
   const products = await client.fetch(
     `*[_type == "product" && !(_id in path("drafts.**"))]`
   );
   const footerBanner = await client.fetch(`*[_type == "footerBanner"]`);
 
+  const userSession = await getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+  // console.log({ session });
+
   return {
     props: {
       products,
       banner,
       footerBanner,
+      userSession,
     },
   };
 }
