@@ -4,9 +4,24 @@ import UpperBanner from "../components/UpperBanner";
 import { client } from "@/lib/client";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
+import { useStateContext } from "@/context/StateContext";
+import { useEffect } from "react";
 
-const Home = ({ banner, products, footerBanner, userSession }) => {
-  console.log(userSession);
+const Home = ({
+  banner,
+  products,
+  footerBanner,
+  userSession,
+  userRatedProducts,
+}) => {
+  console.log(userRatedProducts);
+
+  const { updateUserRatings } = useStateContext();
+
+  useEffect(() => {
+    updateUserRatings(userRatedProducts);
+  }, [userRatedProducts]);
+
   return (
     <>
       <UpperBanner heroBanner={banner.length && banner[0]} />
@@ -16,7 +31,11 @@ const Home = ({ banner, products, footerBanner, userSession }) => {
       </div>
       <div className="products-container">
         {products?.map((product) => (
-          <Product key={product._id} product={product} />
+          <Product
+            key={product._id}
+            product={product}
+            userRatedProducts={userRatedProducts}
+          />
         ))}
       </div>
       <FooterBanner footerBanner={footerBanner && footerBanner[0]} />
@@ -36,6 +55,14 @@ export async function getServerSideProps(context) {
     context.res,
     authOptions
   );
+
+  // retrieve this specific user ratings based on his email
+  const user = await client.fetch(
+    `*[_type == "user" && email == "${userSession?.user?.email}"][0]`
+  );
+
+  const userRatedProducts = user ? await user?.ratedProducts : [];
+
   // console.log({ session });
 
   return {
@@ -44,6 +71,7 @@ export async function getServerSideProps(context) {
       banner,
       footerBanner,
       userSession,
+      userRatedProducts,
     },
   };
 }
