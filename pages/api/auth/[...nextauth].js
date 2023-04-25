@@ -2,6 +2,16 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 
+import { createClient } from "next-sanity";
+
+const client = createClient({
+  projectId: process.env.SANITY_PROJECT_ID,
+  dataset: process.env.SANITY_DATASET,
+  token: process.env.NEXT_PUBLIC_SANITY_TOKEN,
+  apiVersion: "2023-04-13",
+  useCdn: true,
+});
+
 export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
@@ -14,6 +24,54 @@ export const authOptions = {
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     }),
   ],
+  callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      //account for id
+      // console.log(account);
+      // const products = await client.fetch('*[_type == "product"]');
+      // console.log(products);
+
+      const doc = {
+        _type: "user",
+        providerId: account.providerAccountId,
+        given_name: profile.given_name,
+        family_name: profile.family_name,
+        email: profile.email,
+        profileImage: profile.picture,
+        role: "customer",
+        provider: account.provider,
+      };
+      // console.log(doc);
+      // client
+      //   .createIfNotExists(doc)
+      //   .then((res) => {
+      //     console.log("Bike was created (or was already present)");
+      //     return true;
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error creating document:", error);
+      //   });
+
+      try {
+        await client.create(doc);
+        console.log("User document created");
+        return true; // Return a value to indicate success
+      } catch (error) {
+        console.error("Error creating document:", error);
+        return false; // Return a value to indicate failure
+      }
+    },
+    async redirect({ url, baseUrl }) {
+      return baseUrl;
+    },
+    async session({ session, user, token }) {
+      return session;
+    },
+    async jwt({ token, user, account, profile, isNewUser }) {
+      // console.log({ ...profile, ...provider });
+      return token;
+    },
+  },
 };
 
 export default NextAuth(authOptions);
