@@ -26,12 +26,8 @@ export const authOptions = {
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      //account for id
-      // console.log(account);
-      // const products = await client.fetch('*[_type == "product"]');
-      // console.log(products);
-
       const doc = {
+        _id: account.providerAccountId,
         _type: "user",
         providerId: account.providerAccountId,
         given_name: profile.given_name,
@@ -41,20 +37,10 @@ export const authOptions = {
         role: "customer",
         provider: account.provider,
       };
-      // console.log(doc);
-      // client
-      //   .createIfNotExists(doc)
-      //   .then((res) => {
-      //     console.log("Bike was created (or was already present)");
-      //     return true;
-      //   })
-      //   .catch((error) => {
-      //     console.error("Error creating document:", error);
-      //   });
 
       try {
-        await client.create(doc);
-        console.log("User document created");
+        await client.createIfNotExists(doc);
+        console.log("User document created if was not already present in DB");
         return true; // Return a value to indicate success
       } catch (error) {
         console.error("Error creating document:", error);
@@ -71,6 +57,9 @@ export const authOptions = {
       // console.log({ ...profile, ...provider });
       return token;
     },
+  },
+  httpOptions: {
+    timeout: 40000,
   },
 };
 
