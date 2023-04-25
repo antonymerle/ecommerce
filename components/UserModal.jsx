@@ -5,7 +5,7 @@ const { userModal, connectbtn } = style;
 
 const UserModal = () => {
   const { data: session } = useSession();
-  console.log(session);
+  // console.log(session);
 
   return (
     <div className={userModal}>
