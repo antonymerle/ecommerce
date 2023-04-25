@@ -38,5 +38,29 @@ export default {
       title: 'Provider',
       type: 'string',
     },
+    {
+      title: 'Rated products',
+      name: 'ratedProducts',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              title: 'Product',
+              name: 'product',
+              type: 'reference',
+              to: [{type: 'product'}],
+            },
+            {
+              title: 'Rate',
+              name: 'rate',
+              type: 'number',
+              validation: (Rule) => Rule.integer().min(1).max(5), // Set validation rules for rate field
+            },
+          ],
+        },
+      ],
+    },
   ],
 }
