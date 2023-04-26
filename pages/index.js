@@ -50,11 +50,14 @@ export async function getServerSideProps(context) {
   );
   const footerBanner = await client.fetch(`*[_type == "footerBanner"]`);
 
-  const userSession = await getServerSession(
+  let userSession = await getServerSession(
     context.req,
     context.res,
     authOptions
   );
+
+  // handling the non-serializable object throwed by getServerSideProps (sigh)
+  userSession = JSON.parse(JSON.stringify(userSession));
 
   // retrieve this specific user ratings based on his email
   const user = await client.fetch(
