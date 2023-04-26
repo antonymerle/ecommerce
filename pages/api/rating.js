@@ -15,13 +15,11 @@ export default async (req, res) => {
       sesionEmail: session.user.email,
     });
 
-    // console.log(user);
-
     let newRatedProduct = null;
 
     if (!user.ratedProducts) {
       console.log("empty array");
-      // If the product has not been rated before, fetch the product reference
+      // The product has not been rated before, fetch it
       const product = await client.fetch(
         `*[_type == "product" && _id == $productId][0]`,
         { productId }
@@ -33,11 +31,7 @@ export default async (req, res) => {
         rate: starsNumber,
       };
 
-      console.log(newRatedProduct);
-
-      // // Push the new ratedProduct object to the ratedProducts array
-      // newRatedProduct = [newRatedProduct];
-      // Update the user in the sanity database
+      // Update DB by creating a new array of rated products and pushing the object in it
       await client
         .patch(user._id)
         .setIfMissing({ ratedProducts: [] })
@@ -57,11 +51,12 @@ export default async (req, res) => {
           res.json({ result: false, error });
         });
     } else {
+      // The user has already an array with notations in it.
       // Find the index of the ratedProduct in the user's ratedProducts array based on the product ID
       const ratedProductIndex = user.ratedProducts.findIndex(
         (el) => el.product._ref == productId
       );
-      console.log(ratedProductIndex);
+
       // Update the rate field in the ratedProduct object
       if (ratedProductIndex !== -1) {
         user.ratedProducts[ratedProductIndex].rate = starsNumber;
@@ -78,8 +73,6 @@ export default async (req, res) => {
           rate: starsNumber,
         };
 
-        console.log(newRatedProduct);
-
         // Push the new ratedProduct object to the ratedProducts array
         user.ratedProducts.push(newRatedProduct);
       }
@@ -88,7 +81,6 @@ export default async (req, res) => {
       await client
         .patch(user._id)
         .setIfMissing({ ratedProducts: [] })
-        // .append("ratedProducts", [newRatedProduct])
         .set({ ratedProducts: user.ratedProducts })
         .commit({ autoGenerateArrayKeys: true })
         .then((updatedUser) => {
