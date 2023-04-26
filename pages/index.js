@@ -63,7 +63,7 @@ export async function getServerSideProps(context) {
 
   console.log(user);
 
-  const userRatedProducts = await user?.ratedProducts;
+  const userRatedProducts = (await user?.ratedProducts) ?? [];
 
   // console.log({ userRatedProducts });
 
