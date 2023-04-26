@@ -19,22 +19,29 @@ const Ratings = ({ product }) => {
   ]);
 
   const { userRatings } = useStateContext();
-  // if (userRatings.length)
-  //   console.log({ a: userRatings[0].product._ref, b: product._id });
 
   const [userStars, setUserStars] = useState([]);
 
   useEffect(() => {
-    const userRating = userRatings.filter((r) => r.product._ref == product._id);
-    console.log(userRating);
+    if (userRatings && userRatings.length > 0) {
+      const userRating = userRatings.filter((r) => {
+        console.log(
+          `${r?.product?._ref} == ${product._id} : ${
+            r?.product?._ref == product._id
+          }`
+        );
+        return r?.product?._ref == product._id;
+      });
 
-    if (userRating.length) {
-      const goldenStars = fillMidas(userRating[0].rate - 1);
-      setUserStars(goldenStars);
-    } else {
-      setUserStars([]);
+      if (userRating.length > 0) {
+        const goldenStars = fillMidas(userRating[0].rate - 1);
+        console.log({ goldenStars });
+        setUserStars(goldenStars);
+      } else {
+        setUserStars([]);
+      }
     }
-  }, [product.slug]);
+  }, [product.slug, userRatings]);
 
   const mean = computeMean(product.ratings);
   const STAR_MAX = 5;
