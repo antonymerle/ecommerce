@@ -14,7 +14,7 @@ const Home = ({
   userSession,
   userRatedProducts,
 }) => {
-  console.log(userRatedProducts);
+  // console.log({ userRatedProducts });
 
   const { updateUserRatings } = useStateContext();
 
@@ -61,7 +61,11 @@ export async function getServerSideProps(context) {
     `*[_type == "user" && email == "${userSession?.user?.email}"][0]`
   );
 
-  const userRatedProducts = user ? await user?.ratedProducts : [];
+  console.log(user);
+
+  const userRatedProducts = await user?.ratedProducts;
+
+  // console.log({ userRatedProducts });
 
   // console.log({ session });
 
