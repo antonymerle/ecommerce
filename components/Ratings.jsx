@@ -10,6 +10,7 @@ const { ratings, gold } = style;
 // TODO : rec user rating in DB
 
 const Ratings = ({ product }) => {
+  const { userRatings } = useStateContext();
   const [isStarHovered, setIsStarHovered] = useState([
     false,
     false,
@@ -17,9 +18,6 @@ const Ratings = ({ product }) => {
     false,
     false,
   ]);
-
-  const { userRatings } = useStateContext();
-
   const [userStars, setUserStars] = useState([]);
 
   useEffect(() => {
@@ -45,7 +43,9 @@ const Ratings = ({ product }) => {
 
   const mean = computeMean(product.ratings);
   const STAR_MAX = 5;
-  let starsFromBackend = [];
+
+  // We use this array to translate the aggregate notations (1 to 5) from all users in stars.
+  let aggregateStars = [];
 
   // turn stars to gold on hover, then returns them in their original state
   const hoverMidas = (index) => {
@@ -90,7 +90,7 @@ const Ratings = ({ product }) => {
 
   for (let i = 0; i < STAR_MAX; i++) {
     if (i < mean && mean < i + 1) {
-      starsFromBackend.push(
+      aggregateStars.push(
         <MdStarHalf
           onMouseOver={() => {
             setIsStarHovered(hoverMidas(i));
@@ -106,7 +106,7 @@ const Ratings = ({ product }) => {
         />
       );
     } else if (i < mean) {
-      starsFromBackend.push(
+      aggregateStars.push(
         <MdStar
           onMouseOver={() => {
             setIsStarHovered(hoverMidas(i));
@@ -122,7 +122,7 @@ const Ratings = ({ product }) => {
         />
       );
     } else {
-      starsFromBackend.push(
+      aggregateStars.push(
         <MdStarOutline
           onMouseOver={() => {
             setIsStarHovered(hoverMidas(i));
@@ -174,7 +174,7 @@ const Ratings = ({ product }) => {
                 />
               )
             )
-          : starsFromBackend}
+          : aggregateStars}
       </div>
       <p>{computeMean(product.ratings)}</p>
       <button type="button" onClick={handleRequest}>
