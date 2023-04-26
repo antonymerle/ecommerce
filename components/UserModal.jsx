@@ -6,6 +6,7 @@ const { userModal, connectbtn } = style;
 const UserModal = () => {
   const { data: session } = useSession();
   // console.log(session);
+  const firstName = session?.user?.name?.split(" ")[0] ?? "utilisateur";
 
   return (
     <div className={userModal}>
@@ -14,9 +15,7 @@ const UserModal = () => {
         onClick={session ? signOut : signIn}
         className={connectbtn}
       >
-        {session
-          ? `Bienvenue, ${session.user.name.split(" ")[0]}`
-          : "Se connecter"}
+        {session ? `Bienvenue, ${firstName}` : "Se connecter"}
       </button>
     </div>
   );
