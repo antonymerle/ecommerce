@@ -24,6 +24,7 @@ export const authOptions = {
       clientId: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     }),
+
     CredentialsProvider({
       // The name to display on the sign in form (e.g. "Sign in with...")
       name: "email",
@@ -51,7 +52,10 @@ export const authOptions = {
         console.log({ userinDB });
 
         let user = null;
+        let isNewUser = false;
 
+        // signin
+        // user already registered in DB
         if (userinDB?.length) {
           console.log("There already someone with that email in DB");
           user = {
@@ -60,6 +64,27 @@ export const authOptions = {
             email: userinDB[0].email,
           };
         }
+
+        // else {
+        //   // we register new user in DB
+        //   user = {
+        //     _type: "user",
+        //     email: req.body.email,
+        //     given_name: req.body.email.split("@")[0],
+        //     provider: "credentials",
+        //     providerId: "credentials",
+        //     role: "customer",
+        //     isNewUser: true,
+        //   };
+        //   client.create(user).then((response) => {
+        //     console.log(
+        //       `New user ${
+        //         req.body.email.split("@")[0]
+        //       } was created with credentials method and _id of ${response._id}`
+        //     );
+        //   });
+        //   isNewUser = true;
+        // }
 
         // Add logic here to look up the user from the credentials supplied
         // const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
@@ -72,7 +97,8 @@ export const authOptions = {
         } else {
           console.log("no-no branch");
           // If you return null then an error will be displayed advising the user to check their details.
-          return null;
+          return "erreur";
+          // res.redirect("/canceled");
 
           // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
         }
@@ -115,12 +141,23 @@ export const authOptions = {
       return session;
     },
     async jwt({ token, user, account, profile, isNewUser }) {
-      // console.log({ ...profile, ...provider });
+      console.log("jwt callback");
+      console.log({ isNewUser });
+      console.log({ user });
+      console.log({ account });
       return token;
     },
   },
   httpOptions: {
     timeout: 40000,
+  },
+
+  pages: {
+    signIn: "/auth/signin",
+    signOut: "/auth/signout",
+    error: "/auth/error", // Error code passed in query string as ?error=
+    verifyRequest: "/auth/verify-request", // (used for check email message)
+    newUser: "/auth/new-user", // New users will be directed here on first sign in (leave the property out if not of interest)
   },
 };
 
