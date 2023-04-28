@@ -27,26 +27,35 @@ export const authOptions = {
 
     CredentialsProvider({
       // The name to display on the sign in form (e.g. "Sign in with...")
-      name: "email",
+      // name: "email",
       // `credentials` is used to generate a form on the sign in page.
       // You can specify which fields should be submitted, by adding keys to the `credentials` object.
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
-      credentials: {
-        email: {
-          label: "Email",
-          type: "email",
-          placeholder: "john.doe@gmail.com",
-        },
-        password: { label: "Mot de passe", type: "password" },
-      },
+      // credentials: {
+      //   email: {
+      //     label: "Email",
+      //     type: "email",
+      //     placeholder: "john.doe@gmail.com",
+      //   },
+      //   password: { label: "Mot de passe", type: "password" },
+      // },
       async authorize(credentials, req) {
         console.log({ credentials }, { req: req.body });
+
+        const { email, password, origin } = req.body;
+        if (
+          !email ||
+          !password ||
+          (origin !== "signin" && origin !== "signup")
+        ) {
+          return null;
+        }
 
         const groqQuery = `*[_type == "user" && email == $userEmail]`;
 
         const userinDB = await client.fetch(groqQuery, {
-          userEmail: req.body.email,
+          userEmail: email,
         });
 
         console.log({ userinDB });
@@ -69,8 +78,8 @@ export const authOptions = {
         //   // we register new user in DB
         //   user = {
         //     _type: "user",
-        //     email: req.body.email,
-        //     given_name: req.body.email.split("@")[0],
+        //     email: email,
+        //     given_name: email.split("@")[0],
         //     provider: "credentials",
         //     providerId: "credentials",
         //     role: "customer",
@@ -79,7 +88,7 @@ export const authOptions = {
         //   client.create(user).then((response) => {
         //     console.log(
         //       `New user ${
-        //         req.body.email.split("@")[0]
+        //         email.split("@")[0]
         //       } was created with credentials method and _id of ${response._id}`
         //     );
         //   });

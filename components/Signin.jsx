@@ -55,16 +55,15 @@ export default function SignIn() {
     }
 
     // Check if password meets security requirements
-    if (!password.match(/^(?=.*[A-Z])(?=.*[!@#$&*]).{8}$/)) {
-      setPasswordError(
-        "Le mot de passe doit avoir au moins 8 caractères dont un caractère special et une majuscule."
-      );
+    // if (!password.match(/^(?=.*[A-Z])(?=.*[!@#$&*]).{8}$/)) {
+    if (password.length < 8) {
+      setPasswordError("Le mot de passe doit avoir au moins 8 caractères.");
       return;
     } else {
       setPasswordError("");
     }
 
-    signIn("credentials", { email, password });
+    signIn("credentials", { email, password, origin: "signin" });
   };
 
   return (
