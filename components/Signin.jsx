@@ -134,7 +134,11 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" component={NextLink} variant="body2">
+                <Link
+                  href="/auth/forgotPassword"
+                  component={NextLink}
+                  variant="body2"
+                >
                   Forgot password?
                 </Link>
               </Grid>
