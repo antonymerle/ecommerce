@@ -94,7 +94,7 @@ export default function SignUp() {
             <Grid container spacing={2}>
               <Grid item xs>
                 <Button
-                  type="submit"
+                  type="button"
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
@@ -106,11 +106,11 @@ export default function SignUp() {
 
               <Grid item xs>
                 <Button
-                  type="submit"
+                  type="button"
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
-                  onClick={() => signIn("google")}
+                  onClick={() => signIn("facebook")}
                 >
                   Continuer avec Facebook
                 </Button>
