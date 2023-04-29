@@ -26,6 +26,8 @@ export const authOptions = {
     }),
 
     CredentialsProvider({
+      id: "credentials",
+      name: "Credentials",
       // The name to display on the sign in form (e.g. "Sign in with...")
       // name: "email",
       // `credentials` is used to generate a form on the sign in page.
@@ -71,11 +73,13 @@ export const authOptions = {
 
           const user = await res.json();
 
+          console.log({ user });
+
           if (res.ok && user) {
             console.log("res & user : ok", { user });
             return user;
           }
-
+          console.log(user.error);
           return null;
         } else if (formType == "signup") {
           console.log(
@@ -100,6 +104,7 @@ export const authOptions = {
 
           return null;
         }
+        console.log("bug logic branch");
       },
 
       // console.log({ userinDB });
@@ -180,6 +185,7 @@ export const authOptions = {
       }
     },
     async redirect({ url, baseUrl }) {
+      console.log("redirect callback");
       return baseUrl;
     },
     async jwt({ token, user, account, profile, isNewUser }) {
