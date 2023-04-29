@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { Divider } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useSession, signIn, signOut } from "next-auth/react";
 import NextLink from "next/link";
@@ -82,7 +83,7 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Inscription
           </Typography>
           <Box
             component="form"
@@ -90,6 +91,32 @@ export default function SignUp() {
             noValidate
             sx={{ mt: 1 }}
           >
+            <Grid container spacing={2}>
+              <Grid item xs>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  onClick={() => signIn("google")}
+                >
+                  Continuer avec Google
+                </Button>
+              </Grid>
+
+              <Grid item xs>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  onClick={() => signIn("google")}
+                >
+                  Continuer avec Facebook
+                </Button>
+              </Grid>
+            </Grid>
+            <Divider>Ou avec votre email</Divider>
             <TextField
               margin="normal"
               required
@@ -129,7 +156,7 @@ export default function SignUp() {
               sx={{ mt: 3, mb: 2 }}
               // onClick={signIn("credentials", {username: ""})}
             >
-              Sign Up
+              Valider
             </Button>
             <Grid container>
               <Grid item>
