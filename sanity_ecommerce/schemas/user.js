@@ -24,6 +24,11 @@ export default {
       type: 'string',
     },
     {
+      name: 'password',
+      title: 'Password',
+      type: 'string',
+    },
+    {
       name: 'profileImage',
       title: 'Profile picture',
       type: 'string',
