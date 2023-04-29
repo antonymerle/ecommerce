@@ -17,6 +17,10 @@ const nextConfig = {
     FACEBOOK_CLIENT_ID: process.env.FACEBOOK_CLIENT_ID,
     FACEBOOK_CLIENT_SECRET: process.env.FACEBOOK_CLIENT_SECRET,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+    BASE_DOMAIN_URL:
+      process.env.NODE_ENV !== "production"
+        ? "http://localhost:3000"
+        : "https://ecommerce-chi-kohl.vercel.app",
   },
 };
 
