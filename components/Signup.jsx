@@ -98,7 +98,7 @@ export default function SignUp() {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
-                  onClick={() => signIn("google")}
+                  onClick={() => signIn("google", { formType: "signup" })}
                 >
                   Continuer avec Google
                 </Button>
@@ -110,7 +110,7 @@ export default function SignUp() {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
-                  onClick={() => signIn("facebook")}
+                  onClick={() => signIn("facebook", { formType: "signup" })}
                 >
                   Continuer avec Facebook
                 </Button>
