@@ -63,7 +63,7 @@ export default function SignIn() {
       setPasswordError("");
     }
 
-    signIn("credentials", { email, password, origin: "signin" });
+    signIn("credentials", { email, password, formType: "signin" });
   };
 
   return (
