@@ -17,6 +17,7 @@ import NextLink from "next/link";
 import Link from "@mui/material/Link";
 import { forwardRef } from "react";
 import { useState } from "react";
+import Router from "next/router";
 
 const LinkBehaviour = forwardRef(function LinkBehaviour(props, ref) {
   return <NextLink ref={ref} {...props} />;
@@ -44,7 +45,7 @@ export default function SignIn() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     // Check if email is valid
@@ -64,7 +65,16 @@ export default function SignIn() {
       setPasswordError("");
     }
 
-    signIn("credentials", { email, password, formType: "signin" });
+    const result = await signIn("credentials", {
+      email,
+      password,
+      formType: "signin",
+      redirect: false,
+    });
+    console.log({ result });
+    if (result.status === 200) {
+      Router.push("/");
+    }
   };
 
   return (
@@ -87,7 +97,7 @@ export default function SignIn() {
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            // onSubmit={handleSubmit}
             noValidate
             sx={{ mt: 1 }}
           >
@@ -150,11 +160,11 @@ export default function SignIn() {
               label="Remember me"
             />
             <Button
-              type="submit"
+              type="button"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              // onClick={signIn("credentials", {username: ""})}
+              onClick={handleSubmit}
             >
               Connexion
             </Button>
@@ -180,3 +190,18 @@ export default function SignIn() {
     </ThemeProvider>
   );
 }
+
+// export async function getServerSideProps(context) {
+//   const session = await getServerSession(context.req, context.res, authOptions);
+//   // If the user is already logged in, redirect.
+//   // Note: Make sure not to redirect to the same page
+//   // To avoid an infinite loop!
+//   if (session) {
+//     return { redirect: { destination: "/" } };
+//   }
+//   const providers = await getProviders();
+//   return {
+//     props: { providers: providers ?? [] },
+//   }
+//   console.log({ session });
+// }
