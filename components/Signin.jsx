@@ -7,6 +7,7 @@ import Checkbox from "@mui/material/Checkbox";
 
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import { Divider } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -82,7 +83,7 @@ export default function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Se connecter
           </Typography>
           <Box
             component="form"
@@ -90,6 +91,32 @@ export default function SignIn() {
             noValidate
             sx={{ mt: 1 }}
           >
+            <Grid container spacing={2}>
+              <Grid item xs>
+                <Button
+                  type="button"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  onClick={() => signIn("google")}
+                >
+                  Continuer avec Google
+                </Button>
+              </Grid>
+
+              <Grid item xs>
+                <Button
+                  type="button"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  onClick={() => signIn("facebook")}
+                >
+                  Continuer avec Facebook
+                </Button>
+              </Grid>
+            </Grid>
+            <Divider>Ou</Divider>
             <TextField
               margin="normal"
               required
@@ -129,7 +156,7 @@ export default function SignIn() {
               sx={{ mt: 3, mb: 2 }}
               // onClick={signIn("credentials", {username: ""})}
             >
-              Sign In
+              Connexion
             </Button>
             <Grid container>
               <Grid item xs>
@@ -138,12 +165,12 @@ export default function SignIn() {
                   component={NextLink}
                   variant="body2"
                 >
-                  Forgot password?
+                  Mot de passe oublié?
                 </Link>
               </Grid>
               <Grid item>
                 <Link href="/auth/signup" component={NextLink} variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {"Pas de compte? Inscrivez-vous"}
                 </Link>
               </Grid>
             </Grid>
