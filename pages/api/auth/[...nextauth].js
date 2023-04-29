@@ -41,77 +41,113 @@ export const authOptions = {
       //   password: { label: "Mot de passe", type: "password" },
       // },
       async authorize(credentials, req) {
-        console.log({ credentials }, { req: req.body });
+        // console.log({ credentials }, { req: req.body });
 
-        const { email, password, origin } = req.body;
+        const { email, password, formType } = req.body;
+        console.log(email, password, formType);
+
         if (
           !email ||
           !password ||
-          (origin !== "signin" && origin !== "signup")
+          (formType !== "signin" && formType !== "signup")
         ) {
+          console.log("missing parameters");
           return null;
         }
 
-        const groqQuery = `*[_type == "user" && email == $userEmail]`;
+        if (formType == "signin") {
+          console.log(
+            "signin transmission endpoint",
+            process.env.BASE_DOMAIN_URL
+          );
+          const res = await fetch(
+            `${process.env.BASE_DOMAIN_URL}/api/auth/credentials-signin`,
+            {
+              method: "POST",
+              body: JSON.stringify(req.body),
+              headers: { "Content-Type": "application/json" },
+            }
+          );
 
-        const userinDB = await client.fetch(groqQuery, {
-          userEmail: email,
-        });
+          const user = await res.json();
 
-        console.log({ userinDB });
+          if (res.ok && user) {
+            console.log("res & user : ok", { user });
+            return user;
+          }
 
-        let user = null;
-        let isNewUser = false;
+          return null;
+        } else if (formType == "signup") {
+          console.log(
+            "signup transmission endpoint",
+            process.env.BASE_DOMAIN_URL
+          );
+          const res = await fetch(
+            `${process.env.BASE_DOMAIN_URL}/api/auth/credentials-signup`,
+            {
+              method: "POST",
+              body: JSON.stringify(req.body),
+              headers: { "Content-Type": "application/json" },
+            }
+          );
 
-        // signin
-        // user already registered in DB
-        if (userinDB?.length) {
-          console.log("There already someone with that email in DB");
-          user = {
-            id: userinDB[0]._id,
-            name: `${userinDB[0].given_name} ${userinDB[0].family_name}`,
-            email: userinDB[0].email,
-          };
-        }
+          const user = await res.json();
 
-        // else {
-        //   // we register new user in DB
-        //   user = {
-        //     _type: "user",
-        //     email: email,
-        //     given_name: email.split("@")[0],
-        //     provider: "credentials",
-        //     providerId: "credentials",
-        //     role: "customer",
-        //     isNewUser: true,
-        //   };
-        //   client.create(user).then((response) => {
-        //     console.log(
-        //       `New user ${
-        //         email.split("@")[0]
-        //       } was created with credentials method and _id of ${response._id}`
-        //     );
-        //   });
-        //   isNewUser = true;
-        // }
+          if (res.ok && user) {
+            console.log("res & user : ok", user);
+            return user;
+          }
 
-        // Add logic here to look up the user from the credentials supplied
-        // const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
-
-        if (user) {
-          console.log("ok branch");
-          console.log(user);
-          // Any object returned will be saved in `user` property of the JWT
-          return user;
-        } else {
-          console.log("no-no branch");
-          // If you return null then an error will be displayed advising the user to check their details.
-          return "erreur";
-          // res.redirect("/canceled");
-
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+          return null;
         }
       },
+
+      // console.log({ userinDB });
+
+      // let user = null;
+      // let isNewUser = false;
+
+      // signin
+      // user already registered in DB
+
+      // else {
+      //   // we register new user in DB
+      //   user = {
+      //     _type: "user",
+      //     email: email,
+      //     given_name: email.split("@")[0],
+      //     provider: "credentials",
+      //     providerId: "credentials",
+      //     role: "customer",
+      //     isNewUser: true,
+      //   };
+      //   client.create(user).then((response) => {
+      //     console.log(
+      //       `New user ${
+      //         email.split("@")[0]
+      //       } was created with credentials method and _id of ${response._id}`
+      //     );
+      //   });
+      //   isNewUser = true;
+      // }
+
+      // Add logic here to look up the user from the credentials supplied
+      // const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
+
+      // if (user) {
+      //   console.log("ok branch");
+      //   console.log(user);
+      // Any object returned will be saved in `user` property of the JWT
+      //   return user;
+      // } else {
+      //   console.log("no-no branch");
+      // If you return null then an error will be displayed advising the user to check their details.
+      // return "erreur";
+      // res.redirect("/canceled");
+
+      // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+      // }
+      // },
     }),
   ],
   callbacks: {
@@ -120,7 +156,7 @@ export const authOptions = {
       if (credentials) {
         console.log("user signed in with credential", { user });
         // HANDLE signin with credentials
-        return credentials;
+        return user;
       }
       const doc = {
         _id: account.providerAccountId,
@@ -146,15 +182,36 @@ export const authOptions = {
     async redirect({ url, baseUrl }) {
       return baseUrl;
     },
-    async session({ session, user, token }) {
-      return session;
-    },
     async jwt({ token, user, account, profile, isNewUser }) {
       console.log("jwt callback");
+      console.log({ token });
+      console.log({ profile });
+
       console.log({ isNewUser });
       console.log({ user });
       console.log({ account });
       return token;
+    },
+    async session({ session, user, token }) {
+      console.log("session callback");
+      console.log({ user });
+      console.log({ session });
+      console.log({ token });
+      const groqQuery = `*[_type == "user" && email == $userEmail]`;
+
+      const userinDB = await client.fetch(groqQuery, {
+        userEmail: session.user.email,
+      });
+
+      if (userinDB.length) {
+        return {
+          session: {
+            user: { ...userinDB[0] },
+          },
+        };
+      }
+
+      return session;
     },
   },
   httpOptions: {
