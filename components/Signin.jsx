@@ -76,7 +76,20 @@ export default function SignIn() {
     if (result.status === 200) {
       Router.push("/");
     } else {
-      setAuthFailureMessage("Echec de l'authentification.");
+      // requête directe du serveur pour obtenir le message d'erreur.
+      const retrieveErrorMessage = await fetch("/api/auth/credentials-signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({ email, password, formType: "signin" }),
+      });
+
+      const response = await retrieveErrorMessage.json();
+      console.log(response);
+
+      setAuthFailureMessage(response.error);
     }
   };
 
@@ -131,7 +144,7 @@ export default function SignIn() {
             </Grid>
             <Divider>Ou</Divider>
             {authFailureMessage && (
-              <Alert severity="error">Echec de l'authentification.</Alert>
+              <Alert severity="error">{authFailureMessage}</Alert>
             )}
             <TextField
               margin="normal"
