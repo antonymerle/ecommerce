@@ -4,7 +4,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-
+import { Alert } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -43,8 +43,9 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [authFailureMessage, setAuthFailureMessage] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     // Check if email is valid
@@ -64,7 +65,34 @@ export default function SignUp() {
       setPasswordError("");
     }
 
-    signIn("credentials", { email, password, formType: "signup" });
+    const result = await signIn("credentials", {
+      email,
+      password,
+      formType: "signup",
+      redirect: false,
+      callbackUrl: "/auth/signin?error=Default",
+    });
+
+    console.log({ result });
+
+    if (result.status === 200) {
+      Router.push("/");
+    } else {
+      // requête directe du serveur pour obtenir le message d'erreur.
+      const retrieveErrorMessage = await fetch("/api/auth/credentials-signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({ email, password, formType: "signup" }),
+      });
+
+      const response = await retrieveErrorMessage.json();
+      console.log(response);
+
+      setAuthFailureMessage(response.error);
+    }
   };
 
   return (
@@ -117,6 +145,9 @@ export default function SignUp() {
               </Grid>
             </Grid>
             <Divider>Ou avec votre email</Divider>
+            {authFailureMessage && (
+              <Alert severity="error">{authFailureMessage}</Alert>
+            )}
             <TextField
               margin="normal"
               required
