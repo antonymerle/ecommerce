@@ -29,8 +29,8 @@ export default async (req, res) => {
       console.log("Passwords DO NOT match !");
 
       return res
-        .status(403)
-        .json({ result: false, error: "Wrong credentials" });
+        .status(401)
+        .json({ result: false, error: "Mauvais identifiant / mot de passe." });
     }
   }
 
