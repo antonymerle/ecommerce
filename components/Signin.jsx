@@ -4,7 +4,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-
+import { Alert } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { Divider } from "@mui/material";
@@ -44,6 +44,7 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [authFailureMessage, setAuthFailureMessage] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -74,6 +75,8 @@ export default function SignIn() {
     console.log({ result });
     if (result.status === 200) {
       Router.push("/");
+    } else {
+      setAuthFailureMessage("Echec de l'authentification.");
     }
   };
 
@@ -127,6 +130,9 @@ export default function SignIn() {
               </Grid>
             </Grid>
             <Divider>Ou</Divider>
+            {authFailureMessage && (
+              <Alert severity="error">Echec de l'authentification.</Alert>
+            )}
             <TextField
               margin="normal"
               required
