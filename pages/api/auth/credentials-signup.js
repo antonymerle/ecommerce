@@ -20,9 +20,9 @@ export default async (req, res) => {
 
   if (userinDB?.length) {
     console.log("User already present in DB");
-    return res.status(400).json({
+    return res.status(401).json({
       result: false,
-      error: "User already present in DB, please sign in.",
+      error: "Utilisateur déjà inscrit.",
     });
   } else {
     console.log("we register new user in DB");
