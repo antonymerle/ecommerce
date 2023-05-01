@@ -3,7 +3,7 @@
   padding: 4rem 3rem;
   background-color: var(--secondaryColor);
   border-radius: 15px;
-  height: 30vh;
+  height: 400px;
   line-height: 0.9;
   width: 100%;
   overflow: hidden;
@@ -37,7 +37,7 @@
 
 .mainText h1 {
   color: white;
-  font-size: 7em;
+  font-size: 6rem;
   text-transform: uppercase;
 }
 
@@ -81,8 +81,9 @@
   font-size: 1.2rem;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .container {
+    height: 500px;
     padding: 2rem 1rem;
   }
 
@@ -94,7 +95,7 @@
   }
 
   .mainText h1 {
-    font-size: 4em;
+    font-size: 6em;
   }
 
   .mainText h3 {
