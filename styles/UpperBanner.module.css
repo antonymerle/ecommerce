@@ -3,7 +3,7 @@
   padding: 4rem 3rem;
   background-color: var(--secondaryColor);
   border-radius: 15px;
-  height: 500px;
+  height: 30vh;
   line-height: 0.9;
   width: 100%;
   overflow: hidden;
@@ -59,7 +59,8 @@
 }
 .imageContainer img {
   width: 80%;
-  height: auto;
+  height: 80%;
+  object-fit: scale-down;
 }
 
 .description {
