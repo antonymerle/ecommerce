@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useStateContext } from "@/context/StateContext";
 import { urlFor, client } from "../../lib/client";
+import { computeTTC } from "@/lib/utils";
 import Ratings from "@/components/Ratings";
 import { Product } from "@/components";
 import Quantity from "@/components/Quantity";
@@ -8,7 +9,7 @@ import Quantity from "@/components/Quantity";
 const ProductDetails = ({ product, products }) => {
   const [index, setIndex] = useState(0);
   const { qty, onAdd, setShowCart } = useStateContext();
-  const { image, name, details, price } = product;
+  const { image, name, details, priceHT, tax } = product;
 
   const handleBuyNow = () => {
     onAdd(product, qty);
@@ -46,7 +47,7 @@ const ProductDetails = ({ product, products }) => {
           <Ratings product={product} />
           <h4>Détails:</h4>
           <p>{details}</p>
-          <p className="price">${price}</p>
+          <p className="price">{computeTTC(priceHT, tax)}€</p>
 
           <div className="quantity">
             <h3>Quantité :</h3>
