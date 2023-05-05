@@ -128,24 +128,42 @@
 }
 
 .quantityDesc {
+  height: 40px;
+  width: 150px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border: 1px solid gray;
-  padding: 6px;
 }
-.quantityDesc span {
-  font-size: 16px;
-  padding: 6px 12px;
-  cursor: pointer;
-}
-.quantityDesc .minus {
+
+.minus {
+  display: flex;
+  width: 33%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
   border-right: 1px solid gray;
   color: var(--mainColor);
+  cursor: pointer;
 }
-.quantityDesc .num {
+.num {
+  display: flex;
+  width: 34%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+
   border-right: 1px solid gray;
   font-size: 20px;
 }
-.quantityDesc .plus {
+.plus {
+  display: flex;
+  height: 100%;
+  width: 33%;
+  justify-content: center;
+  align-items: center;
   color: rgb(49, 168, 49);
+  cursor: pointer;
 }
 
 .cartBottom {

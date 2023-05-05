@@ -12,33 +12,33 @@ const Quantity = ({ context, cartItem }) => {
 
   if (context === "cart" && cartItem) {
     return (
-      <p className={quantityDesc}>
-        <span
+      <div className={quantityDesc}>
+        <div
           className={minus}
           onClick={() => toggleCartItemQuantity(cartItem._id, "dec")}
         >
           <AiOutlineMinus />
-        </span>
-        <span className={num}>{cartItem.quantity}</span>
-        <span
+        </div>
+        <div className={num}>{cartItem.quantity}</div>
+        <div
           className={plus}
           onClick={() => toggleCartItemQuantity(cartItem._id, "inc")}
         >
           <AiOutlinePlus />
-        </span>
-      </p>
+        </div>
+      </div>
     );
   } else if (context === "slug") {
     return (
-      <p className={quantityDesc}>
-        <span className={minus} onClick={decQty}>
+      <div className={quantityDesc}>
+        <div className={minus} onClick={decQty}>
           <AiOutlineMinus />
-        </span>
-        <span className={num}>{qty}</span>
-        <span className={plus} onClick={incQty}>
+        </div>
+        <div className={num}>{qty}</div>
+        <div className={plus} onClick={incQty}>
           <AiOutlinePlus />
-        </span>
-      </p>
+        </div>
+      </div>
     );
   } else {
     return <p>Error</p>;
