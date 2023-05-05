@@ -4,6 +4,7 @@ import { TiDeleteOutline } from "react-icons/ti";
 import { toast } from "react-hot-toast";
 import { urlFor } from "@/lib/client";
 import { useStateContext } from "@/context/StateContext";
+import { computeTTC } from "@/lib/utils";
 import Link from "next/link";
 import getStripe from "@/lib/getStripe";
 import styles from "../styles/Cart.module.css";
@@ -88,7 +89,9 @@ const Cart = () => {
                 <div className={itemDesc}>
                   <div className={`${flex} ${top}`}>
                     <h5>{item.name}</h5>
-                    <h4>${item.price}</h4>
+                    <h4>
+                      ${computeTTC(item.priceHT, item.tax) * item.quantity}
+                    </h4>
                   </div>
                   <div className={`${flex} ${bottom}`}>
                     <div>
