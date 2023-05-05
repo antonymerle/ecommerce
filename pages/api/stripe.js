@@ -1,6 +1,10 @@
+import { computeTTC } from "@/lib/utils";
+
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
+  console.log(req.body);
+
   if (req.method === "POST") {
     try {
       const line_items = req.body.cartItems.map((item) => {
@@ -14,7 +18,7 @@ export default async function handler(req, res) {
         return {
           price_data: {
             currency: "eur",
-            unit_amount: item.price * 100,
+            unit_amount: computeTTC(item.priceHT, item.tax) * 100,
             product_data: {
               name: item.name,
               images: [imgURL],
