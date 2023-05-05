@@ -1,0 +1,42 @@
+.container {
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.inputContainer {
+  width: 30%;
+  height: 30px;
+  min-width: 250px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 7rem 0rem;
+}
+
+.searchBox {
+  width: 100%;
+  border: none;
+  background: transparent;
+  border-bottom: 1px solid grey;
+  padding: 1rem 0.5rem;
+  margin-right: 1rem;
+  font-size: 1.5em;
+}
+
+.searchBox:focus {
+  outline: none;
+  background-color: rgb(230, 229, 229);
+}
+
+.searchResults {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  width: 100%;
+}
