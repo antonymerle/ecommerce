@@ -5,7 +5,8 @@ import { useStateContext } from "@/context/StateContext";
 import style from "../styles/Navbar.module.css";
 import UserModal from "./UserModal";
 
-const { navbarContainer, logo, cartIcon, navIcons, cartItemQty } = style;
+const { navbarContainer, logo, cartIcon, navIcons, search, cartItemQty } =
+  style;
 
 const Navbar = () => {
   const { showCart, setShowCart, totalQuantities } = useStateContext();
@@ -18,6 +19,9 @@ const Navbar = () => {
 
       <div className={navIcons}>
         <UserModal />
+        <Link href={"/search"} className={search}>
+          Rechercher
+        </Link>
         <button
           type="button"
           className={cartIcon}

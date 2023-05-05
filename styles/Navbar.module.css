@@ -15,9 +15,22 @@
 
 .navIcons {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  width: 150px;
+  min-width: 260px;
+}
+
+.search {
+  cursor: pointer;
+  text-overflow: ellipsis;
+  padding: 0 15px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: gray;
+  transition: 0.3s;
+}
+.search:hover {
+  color: var(--mainColor);
 }
 
 .cartIcon {
