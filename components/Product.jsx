@@ -8,6 +8,8 @@ const { productCard, productImage, productName, productPrice } = style;
 const Product = ({ product: { image, name, slug, priceHT, tax } }) => {
   return (
     <div>
+      {/* .current vient de Sanity.io : field automatique mappé sur option: {source} */}
+      {/* see https://www.sanity.io/docs/slug-type */}
       <Link href={`/product/${slug.current}`}>
         <div className={productCard}>
           <img
