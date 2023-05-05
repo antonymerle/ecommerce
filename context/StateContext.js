@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
+import { computeTTC } from "@/lib/utils";
 
 const Context = createContext();
 
@@ -20,7 +21,8 @@ export const StateContext = ({ children }) => {
     );
 
     setTotalPrice(
-      (prevTotalPrice) => prevTotalPrice + product.price * quantity
+      (prevTotalPrice) =>
+        prevTotalPrice + computeTTC(product.priceHT, product.tax) * quantity
     );
     setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
 
@@ -49,7 +51,9 @@ export const StateContext = ({ children }) => {
 
     setTotalPrice(
       (prevTotalPrice) =>
-        prevTotalPrice - foundProduct.price * foundProduct.quantity
+        prevTotalPrice -
+        computeTTC(foundProduct.priceHT, foundProduct.tax) *
+          foundProduct.quantity
     );
     setTotalQuantities(
       (prevTotalQuantities) => prevTotalQuantities - foundProduct.quantity
@@ -67,7 +71,10 @@ export const StateContext = ({ children }) => {
         ...newCartItems,
         { ...foundProduct, quantity: foundProduct.quantity + 1 },
       ]);
-      setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price);
+      setTotalPrice(
+        (prevTotalPrice) =>
+          prevTotalPrice + computeTTC(foundProduct.priceHT, foundProduct.tax)
+      );
       setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + 1);
     } else if (value === "dec") {
       if (foundProduct.quantity > 1) {
@@ -75,7 +82,10 @@ export const StateContext = ({ children }) => {
           ...newCartItems,
           { ...foundProduct, quantity: foundProduct.quantity - 1 },
         ]);
-        setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price);
+        setTotalPrice(
+          (prevTotalPrice) =>
+            prevTotalPrice - computeTTC(foundProduct.priceHT, foundProduct.tax)
+        );
         setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - 1);
       }
     }
