@@ -26,8 +26,8 @@ const Success = () => {
         <p className={emailMsg}>Un email de confirmation vous a été expédié.</p>
         <p className={description}>
           Pour toute question, n'hésitez pas à nous écrire à cette adresse :{" "}
-          <a href="mailto:order@example.com" className={email}>
-            order@example.com
+          <a href={`mailto:${process.env.CONTACT_ORDERS}`} className={email}>
+            {process.env.CONTACT_ORDERS}
           </a>
         </p>
         <Link href="/">

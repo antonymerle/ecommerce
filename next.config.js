@@ -21,6 +21,7 @@ const nextConfig = {
       process.env.NODE_ENV !== "production"
         ? "http://localhost:3000"
         : "https://ecommerce-chi-kohl.vercel.app",
+    CONTACT_ORDERS: process.env.CONTACT_ORDERS,
   },
 };
 
