@@ -1,12 +1,15 @@
 import { AiFillInstagram, AiOutlineTwitter } from "react-icons/ai";
+import style from "../styles/Footer.module.css";
+
+const { footerContainer, icons } = style;
 
 const Footer = () => {
   return (
-    <div className="footer-container">
+    <div className={footerContainer}>
       <p>
         {new Date().getFullYear()} Artefacts e-commerce. Tous droits réservés.
       </p>
-      <ul className="icons">
+      <ul className={icons}>
         <li>
           <a
             href="https://www.instagram.com/antonymerle"
