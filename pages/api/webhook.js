@@ -19,6 +19,15 @@ const buffer = (req) => {
   });
 };
 
+const fulfillOrder = (lineItems) => {
+  // TODO: fill me in
+  console.log("Fulfilling order", lineItems);
+
+  // TODO
+  // envoyer les infos par mail au vendeur ?
+  // sauvegarder en BDD ?
+};
+
 export default async function handler(req, res) {
   //   const payload = req.body;
 
@@ -52,7 +61,18 @@ export default async function handler(req, res) {
       const paymentIntentSucceeded = event.data.object;
       // Then define and call a function to handle the event payment_intent.succeeded
       console.log("Le client a payé sa commande.");
-      console.log(event);
+      console.log({ event });
+      // Retrieve the session. If you require line items in the response, you may include them by expanding line_items.
+      const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
+        event.data.object.id,
+        {
+          expand: ["line_items"],
+        }
+      );
+      const lineItems = sessionWithLineItems.line_items;
+
+      // Fulfill the purchase...
+      fulfillOrder(lineItems);
       // TODO Traiter la commande
       /*
 https://stripe.com/docs/payments/checkout/fulfill-orders#g%C3%A9rer-l%E2%80%99%C3%A9v%C3%A9nement
