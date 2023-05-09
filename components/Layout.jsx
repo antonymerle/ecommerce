@@ -33,9 +33,9 @@ const Layout = ({ children }) => {
         />
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
-      <header>
-        <Navbar />
-      </header>
+
+      <Navbar />
+
       <main className={mainContainer}>{children}</main>
       <footer>
         <Footer />
