@@ -8,9 +8,9 @@
 }
 
 .inputContainer {
-  width: 30%;
+  width: 40%;
+  min-width: 300px;
   height: 30px;
-  min-width: 250px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -25,6 +25,10 @@
   padding: 1rem 0.5rem;
   margin-right: 1rem;
   font-size: 1.5em;
+}
+
+.searchBox::placeholder {
+  font-size: 1.2rem;
 }
 
 .searchBox:focus {
