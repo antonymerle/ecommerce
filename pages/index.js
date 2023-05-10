@@ -16,11 +16,14 @@ const Home = ({
 }) => {
   // console.log({ userRatedProducts });
 
-  const { updateUserRatings } = useStateContext();
+  const { updateUserRatings, populateUserSession } = useStateContext();
+
+  console.log({ userSession });
 
   useEffect(() => {
     updateUserRatings(userRatedProducts);
-  }, [userRatedProducts]);
+    populateUserSession(userSession);
+  }, [userRatedProducts, userSession]);
 
   return (
     <>
