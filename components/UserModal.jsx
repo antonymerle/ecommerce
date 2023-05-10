@@ -1,21 +1,23 @@
 import style from "../styles/UserModal.module.css";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
+
+import { useStateContext } from "@/context/StateContext";
 
 const { userModal, connectbtn } = style;
 
 const UserModal = () => {
-  const { data: session } = useSession();
-  // console.log(session);
-  const firstName = session?.user?.name?.split(" ")[0] ?? "utilisateur";
+  const { userSession } = useStateContext();
+  const firstName =
+    userSession?.session?.user?.given_name?.split(" ")[0] ?? "utilisateur";
 
   return (
     <div className={userModal}>
       <button
         type="button"
-        onClick={session ? signOut : signIn}
+        onClick={userSession ? signOut : signIn}
         className={connectbtn}
       >
-        {session ? `Bienvenue, ${firstName}` : "Se connecter"}
+        {userSession ? `Bienvenue, ${firstName}` : "Se connecter"}
       </button>
     </div>
   );
