@@ -3,8 +3,14 @@ const nextConfig = {
   reactStrictMode: true,
   images: { domains: ["cdn.sanity.io"] },
   env: {
-    NEXT_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_STRIPE_PUBLISHABLE_KEY,
-    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+    NEXT_STRIPE_PUBLISHABLE_KEY:
+      process.env.NODE_ENV === "production"
+        ? process.env.PROD_NEXT_STRIPE_PUBLISHABLE_KEY
+        : process.env.NEXT_STRIPE_PUBLISHABLE_KEY,
+    STRIPE_SECRET_KEY:
+      process.env.NODE_ENV === "production"
+        ? process.env.PROD_STRIPE_SECRET_KEY
+        : process.env.STRIPE_SECRET_KEY,
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
     STRIPE_FREE_SHIPPING: process.env.STRIPE_FREE_SHIPPING,
     STRIPE_FAST_SHIPPING: process.env.STRIPE_FAST_SHIPPING,
@@ -19,9 +25,9 @@ const nextConfig = {
     FACEBOOK_CLIENT_SECRET: process.env.FACEBOOK_CLIENT_SECRET,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     BASE_DOMAIN_URL:
-      process.env.NODE_ENV !== "production"
-        ? "http://localhost:3000"
-        : "https://ecommerce-chi-kohl.vercel.app",
+      process.env.NODE_ENV === "production"
+        ? "https://ecommerce-chi-kohl.vercel.app"
+        : "http://localhost:3000",
     CONTACT_ORDERS: process.env.CONTACT_ORDERS,
   },
 };
