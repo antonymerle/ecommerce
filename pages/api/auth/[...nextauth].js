@@ -210,9 +210,11 @@ export const authOptions = {
       });
 
       if (userinDB.length) {
+        const { given_name, family_name, email, profileImage, role } =
+          userinDB[0];
         return {
           session: {
-            user: { ...userinDB[0] },
+            user: { given_name, family_name, email, profileImage, role },
           },
         };
       }
