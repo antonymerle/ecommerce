@@ -12,8 +12,14 @@ const nextConfig = {
         ? process.env.PROD_STRIPE_SECRET_KEY
         : process.env.STRIPE_SECRET_KEY,
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
-    STRIPE_FREE_SHIPPING: process.env.STRIPE_FREE_SHIPPING,
-    STRIPE_FAST_SHIPPING: process.env.STRIPE_FAST_SHIPPING,
+    STRIPE_FREE_SHIPPING:
+      process.env.NODE_ENV === "production"
+        ? process.env.PROD_STRIPE_FREE_SHIPPING
+        : process.env.STRIPE_FREE_SHIPPING,
+    STRIPE_FAST_SHIPPING:
+      process.env.NODE_ENV === "production"
+        ? process.env.PROD_STRIPE_FAST_SHIPPING
+        : process.env.STRIPE_FAST_SHIPPING,
     NEXT_PUBLIC_SANITY_TOKEN: process.env.NEXT_PUBLIC_SANITY_TOKEN,
     SANITY_PROJECT_ID: process.env.SANITY_PROJECT_ID,
     SANITY_TITLE: process.env.SANITY_TITLE,
