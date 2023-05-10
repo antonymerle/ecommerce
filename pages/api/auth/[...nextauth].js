@@ -163,14 +163,16 @@ export const authOptions = {
         // HANDLE signin with credentials
         return user;
       }
+      // Facebook has different object fields for describing an user.
+      // When constructing the doc object, Google schema is the default and Facebbok the fallback
       const doc = {
         _id: account.providerAccountId,
         _type: "user",
         providerId: account.providerAccountId,
-        given_name: profile.given_name,
-        family_name: profile.family_name,
+        given_name: profile.given_name ?? user.name.split(" ")[0],
+        family_name: profile.family_name ?? user.name.split(" ")[1],
         email: profile.email,
-        profileImage: profile.picture,
+        profileImage: profile.picture ?? profile.image,
         role: "customer",
         provider: account.provider,
       };
