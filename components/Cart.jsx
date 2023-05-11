@@ -90,7 +90,7 @@ const Cart = () => {
                   <div className={`${flex} ${top}`}>
                     <h5>{item.name}</h5>
                     <h4>
-                      ${computeTTC(item.priceHT, item.tax) * item.quantity}
+                      {computeTTC(item.priceHT, item.tax) * item.quantity}€
                     </h4>
                   </div>
                   <div className={`${flex} ${bottom}`}>
