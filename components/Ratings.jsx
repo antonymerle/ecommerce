@@ -177,9 +177,6 @@ const Ratings = ({ product }) => {
           : aggregateStars}
       </div>
       <p>{computeMean(product.ratings)}</p>
-      <button type="button" onClick={handleRequest}>
-        Click
-      </button>
     </div>
   );
 };
