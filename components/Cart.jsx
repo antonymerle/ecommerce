@@ -33,6 +33,8 @@ const Cart = () => {
   const { setShowCart, cartItems, totalPrice, totalQuantities, onRemove } =
     useStateContext();
 
+  const fmtTotalPrice = totalPrice.toFixed(2);
+
   const handleCheckout = async () => {
     const stripe = await getStripe();
 
@@ -90,7 +92,10 @@ const Cart = () => {
                   <div className={`${flex} ${top}`}>
                     <h5>{item.name}</h5>
                     <h4>
-                      {computeTTC(item.priceHT, item.tax) * item.quantity}€
+                      {(
+                        computeTTC(item.priceHT, item.tax) * item.quantity
+                      ).toFixed(2)}
+                      €
                     </h4>
                   </div>
                   <div className={`${flex} ${bottom}`}>
@@ -113,7 +118,7 @@ const Cart = () => {
           <div className={cartBottom}>
             <div className={total}>
               <h3>Total:</h3>
-              <h3>{totalPrice}€</h3>
+              <h3>{fmtTotalPrice}€</h3>
             </div>
             <div className="btn-container">
               <button type="button" className="btn" onClick={handleCheckout}>
