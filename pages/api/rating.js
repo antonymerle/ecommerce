@@ -104,7 +104,13 @@ export default async (req, res) => {
         });
     }
 
-    // TODO : update product notation
+    // Finally update the product notation
+
+    client
+      .patch(productId)
+      .setIfMissing({ ratings: [] })
+      .append("ratings", [starsNumber])
+      .commit({ autoGenerateArrayKeys: true });
   } else {
     res.status(401).redirect("/unauthorized");
   }
