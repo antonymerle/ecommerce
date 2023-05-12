@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { MdStar, MdStarOutline, MdStarHalf } from "react-icons/md";
+import { toast } from "react-hot-toast";
 import { computeMean } from "@/lib/utils";
-import style from "../styles/Ratings.module.css";
 import { useStateContext } from "@/context/StateContext";
+import style from "../styles/Ratings.module.css";
 
 const { ratings, gold } = style;
 
@@ -10,7 +11,7 @@ const { ratings, gold } = style;
 // TODO : rec user rating in DB
 
 const Ratings = ({ product }) => {
-  const { userRatings } = useStateContext();
+  const { userSession, userRatings } = useStateContext();
   const [isStarHovered, setIsStarHovered] = useState([
     false,
     false,
@@ -69,6 +70,10 @@ const Ratings = ({ product }) => {
   };
 
   const handleRate = (index) => {
+    if (!userSession) {
+      toast.error("Connectez-vous pour noter ce produit.");
+      return;
+    }
     const goldenStars = fillMidas(index);
     setUserStars(goldenStars);
     const starsNumber = index + 1;
