@@ -19,7 +19,7 @@ const Product = ({ product: { image, name, slug, priceHT, tax } }) => {
             height={250}
           />
           <p className={productName}>{name}</p>
-          <p className={productPrice}>{computeTTC(priceHT, tax)}€</p>
+          <p className={productPrice}>{computeTTC(priceHT, tax).toFixed(2)}€</p>
         </div>
       </Link>
     </div>

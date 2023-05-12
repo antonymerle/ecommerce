@@ -47,7 +47,7 @@ const ProductDetails = ({ product, products }) => {
           <Ratings product={product} />
           <h4>Détails:</h4>
           <p>{details}</p>
-          <p className="price">{computeTTC(priceHT, tax)}€</p>
+          <p className="price">{computeTTC(priceHT, tax).toFixed(2)}€</p>
 
           <div className="quantity">
             <h3>Quantité :</h3>
