@@ -42,8 +42,9 @@ const Ratings = ({ product }) => {
     }
   }, [product.slug, userRatings]);
 
-  const mean = computeMean(product.ratings);
   const STAR_MAX = 5;
+  const mean = computeMean(product.ratings);
+  const ratingsNumber = product.ratings?.length ?? 0;
 
   // We use this array to translate the aggregate notations (1 to 5) from all users in stars.
   let aggregateStars = [];
@@ -181,7 +182,10 @@ const Ratings = ({ product }) => {
             )
           : aggregateStars}
       </div>
-      <p>{product.ratings?.length}</p>
+      <p>({computeMean(product.ratings)})</p>
+      <p>
+        {`${ratingsNumber} ${ratingsNumber ? "évaluations" : "évaluation"}`}
+      </p>
     </div>
   );
 };
