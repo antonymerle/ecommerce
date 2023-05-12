@@ -11,7 +11,6 @@ const nextConfig = {
       process.env.NODE_ENV === "production"
         ? process.env.PROD_STRIPE_SECRET_KEY
         : process.env.STRIPE_SECRET_KEY,
-    STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
     STRIPE_FREE_SHIPPING:
       process.env.NODE_ENV === "production"
         ? process.env.PROD_STRIPE_FREE_SHIPPING
