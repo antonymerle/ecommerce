@@ -20,6 +20,10 @@ const nextConfig = {
       process.env.NODE_ENV === "production"
         ? process.env.PROD_STRIPE_FAST_SHIPPING
         : process.env.STRIPE_FAST_SHIPPING,
+    STRIPE_WEBHOOK_SECRET:
+      process.env.NODE_ENV === "production"
+        ? process.env.PROD_STRIPE_WEBHOOK_SECRET
+        : process.env.STRIPE_WEBHOOK_SECRET,
     NEXT_PUBLIC_SANITY_TOKEN: process.env.NEXT_PUBLIC_SANITY_TOKEN,
     SANITY_PROJECT_ID: process.env.SANITY_PROJECT_ID,
     SANITY_TITLE: process.env.SANITY_TITLE,
