@@ -3,16 +3,23 @@ import { authOptions } from "./auth/[...nextauth]";
 import { client } from "./auth/[...nextauth]";
 
 export default async (req, res) => {
-  const session = await getServerSession(req, res, authOptions);
-  console.log({ session });
-  if (session && req.method === "POST") {
+  const rawSession = await getServerSession(req, res, authOptions);
+  // handling the non-serializable object throwed by getServerSideProps (sigh)
+  const userSession = JSON.parse(JSON.stringify(rawSession));
+  console.log("getServerSession");
+  console.log({ userSession });
+  if (userSession && req.method === "POST") {
     const { starsNumber, productId } = req.body;
     console.log(starsNumber, productId);
 
-    const groqQuery = `*[_type == "user" && email == $sesionEmail][0]`; // Query to fetch user with matching providerId and their ratedProducts array
+    const groqQuery = `*[_type == "user" && email == $emailFromSession][0]`; // Query to fetch user with matching providerId and their ratedProducts array
+
+    const emailFromSession = userSession?.session?.user?.email ?? "";
+
+    if (!emailFromSession) res.status(403).json({ error: "User not found" });
 
     const user = await client.fetch(groqQuery, {
-      sesionEmail: session.user.email,
+      emailFromSession,
     });
 
     let newRatedProduct = null;
@@ -96,8 +103,10 @@ export default async (req, res) => {
           res.json({ result: false, error });
         });
     }
+
+    // TODO : update product notation
   } else {
-    res.redirect("/unauthorized");
+    res.status(401).redirect("/unauthorized");
   }
   res.end();
 };
