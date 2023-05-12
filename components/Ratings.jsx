@@ -181,7 +181,7 @@ const Ratings = ({ product }) => {
             )
           : aggregateStars}
       </div>
-      <p>{computeMean(product.ratings)}</p>
+      <p>{product.ratings?.length}</p>
     </div>
   );
 };
