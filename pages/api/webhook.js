@@ -1,4 +1,6 @@
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+// https://github.com/stripe/stripe-node/blob/master/examples/webhook-signing/nextjs/pages/api/webhooks.ts
+// const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+import Stripe from "stripe";
 
 // This is your Stripe CLI webhook secret for testing your endpoint locally.
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -29,18 +31,17 @@ const fulfillOrder = (lineItems) => {
 };
 
 export default async function handler(req, res) {
-  //   const payload = req.body;
-
-  //   console.log("Got payload: " + payload);
-
-  //   res.status(200).end();
-  // }
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2022-11-15",
+  });
 
   // SECURE
 
+  console.log("**** ENTERING WEBHOOK ****");
+
   const sig = req.headers["stripe-signature"];
 
-  let event;
+  let event = Stripe.Event;
 
   // const payload = await getRawBody(req);
   // console.log(payload);
@@ -50,7 +51,7 @@ export default async function handler(req, res) {
 
     event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
   } catch (err) {
-    console.log(`Webhook Error: ${err.message}`);
+    console.log(`❌ Error message: ${err.message}`);
     res.status(400).send(`Webhook Error: ${err.message}`);
     return;
   }
