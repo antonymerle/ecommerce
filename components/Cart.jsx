@@ -100,7 +100,11 @@ const Cart = () => {
                   </div>
                   <div className={`${flex} ${bottom}`}>
                     <div>
-                      <Quantity context="cart" cartItem={item} />
+                      <Quantity
+                        context="cart"
+                        cartItem={item}
+                        inventory={item.quantity}
+                      />
                     </div>
                     <button
                       type="button"

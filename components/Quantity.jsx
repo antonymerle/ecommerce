@@ -1,13 +1,14 @@
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { useStateContext } from "@/context/StateContext";
+import { toast } from "react-hot-toast";
 import styles from "../styles/Cart.module.css";
 
-const { quantityDesc, minus, num, plus } = styles;
+const { quantityDesc, minus, num, plus, disabled } = styles;
 
 // Two different logics wether if the component is in the Cart component or slug page.
 // context parameter is either "cart" or "slug"
 // If context === "cart", cartItem must be provided
-const Quantity = ({ context, cartItem }) => {
+const Quantity = ({ context, cartItem, inventory }) => {
   const { qty, decQty, incQty, toggleCartItemQuantity } = useStateContext();
 
   if (context === "cart" && cartItem) {
@@ -21,8 +22,13 @@ const Quantity = ({ context, cartItem }) => {
         </div>
         <div className={num}>{cartItem.quantity}</div>
         <div
-          className={plus}
-          onClick={() => toggleCartItemQuantity(cartItem._id, "inc")}
+          className={cartItem.quantity >= inventory ? disabled : plus}
+          onClick={() => {
+            console.log(cartItem.quantity, inventory);
+            cartItem.quantity >= inventory
+              ? toast.error("Quantité maximale atteinte !")
+              : toggleCartItemQuantity(cartItem._id, "inc");
+          }}
         >
           <AiOutlinePlus />
         </div>
@@ -35,7 +41,14 @@ const Quantity = ({ context, cartItem }) => {
           <AiOutlineMinus />
         </div>
         <div className={num}>{qty}</div>
-        <div className={plus} onClick={incQty}>
+        <div
+          className={qty >= inventory ? disabled : plus}
+          onClick={() =>
+            qty >= inventory
+              ? toast.error("Quantité maximale atteinte !")
+              : incQty()
+          }
+        >
           <AiOutlinePlus />
         </div>
       </div>

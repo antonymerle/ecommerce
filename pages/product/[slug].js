@@ -49,11 +49,11 @@ const ProductDetails = ({ product, products }) => {
           <p>{details}</p>
           <p className="price">{computeTTC(priceHT, tax).toFixed(2)}€</p>
 
-          {product.inventory > 0 ? (
+          {inventory > 0 ? (
             <>
               <div className="quantity">
                 <h3>Quantité :</h3>
-                <Quantity context="slug" />
+                <Quantity context="slug" inventory={inventory} />
               </div>
 
               <div className="buttons">
