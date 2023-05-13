@@ -184,7 +184,9 @@ const Ratings = ({ product }) => {
       </div>
       <p>({computeMean(product.ratings)})</p>
       <p>
-        {`${ratingsNumber} ${ratingsNumber ? "évaluations" : "évaluation"}`}
+        {`${ratingsNumber} ${
+          ratingsNumber && ratingsNumber > 1 ? "évaluations" : "évaluation"
+        }`}
       </p>
     </div>
   );
