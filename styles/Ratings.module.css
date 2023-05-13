@@ -11,6 +11,11 @@
   margin-top: 0px;
 }
 
+.ratingsDetails {
+  display: flex;
+  justify-content: space-around;
+}
+
 .gold {
   color: gold;
 }

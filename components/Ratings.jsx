@@ -5,7 +5,7 @@ import { computeMean } from "@/lib/utils";
 import { useStateContext } from "@/context/StateContext";
 import style from "../styles/Ratings.module.css";
 
-const { ratings, gold } = style;
+const { ratings, ratingsDetails, gold } = style;
 
 // TODO : rec user rating in local state and account
 // TODO : rec user rating in DB
@@ -182,12 +182,16 @@ const Ratings = ({ product }) => {
             )
           : aggregateStars}
       </div>
-      <p>({computeMean(product.ratings)})</p>
-      <p>
-        {`${ratingsNumber} ${
-          ratingsNumber && ratingsNumber > 1 ? "évaluations" : "évaluation"
-        }`}
-      </p>
+      {ratingsNumber > 1 && (
+        <div className={ratingsDetails}>
+          <p>({computeMean(product.ratings)})</p>
+          <p>
+            {`${ratingsNumber} ${
+              ratingsNumber && ratingsNumber > 1 ? "évaluations" : "évaluation"
+            }`}
+          </p>
+        </div>
+      )}
     </div>
   );
 };
