@@ -168,6 +168,17 @@
   cursor: pointer;
 }
 
+.disabled {
+  display: flex;
+  height: 100%;
+  width: 33%;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  background-color: #777;
+  cursor: pointer;
+}
+
 .cartBottom {
   padding: 1rem 0.5rem;
 }
