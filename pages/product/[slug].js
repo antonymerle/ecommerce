@@ -9,7 +9,7 @@ import Quantity from "@/components/Quantity";
 const ProductDetails = ({ product, products }) => {
   const [index, setIndex] = useState(0);
   const { qty, onAdd, setShowCart } = useStateContext();
-  const { image, name, details, priceHT, tax } = product;
+  const { image, name, details, priceHT, tax, inventory } = product;
 
   const handleBuyNow = () => {
     onAdd(product, qty);
@@ -49,23 +49,33 @@ const ProductDetails = ({ product, products }) => {
           <p>{details}</p>
           <p className="price">{computeTTC(priceHT, tax).toFixed(2)}€</p>
 
-          <div className="quantity">
-            <h3>Quantité :</h3>
-            <Quantity context="slug" />
-          </div>
+          {product.inventory > 0 ? (
+            <>
+              <div className="quantity">
+                <h3>Quantité :</h3>
+                <Quantity context="slug" />
+              </div>
 
-          <div className="buttons">
-            <button
-              type="button"
-              className="add-to-cart"
-              onClick={() => onAdd(product, qty)}
-            >
-              Ajouter au panier
-            </button>
-            <button type="button" className="buy-now" onClick={handleBuyNow}>
-              Acheter
-            </button>
-          </div>
+              <div className="buttons">
+                <button
+                  type="button"
+                  className="add-to-cart"
+                  onClick={() => onAdd(product, qty)}
+                >
+                  Ajouter au panier
+                </button>
+                <button
+                  type="button"
+                  className="buy-now"
+                  onClick={handleBuyNow}
+                >
+                  Acheter
+                </button>
+              </div>
+            </>
+          ) : (
+            <p>Ce produit est indisponible.</p>
+          )}
         </div>
       </div>
 
@@ -103,8 +113,8 @@ export const getStaticPaths = async () => {
 
 // querying data for the requested product only.
 /*
-This is possible because getStaticProps only runs on the server-side. 
-It will never run on the client-side. It won’t even be included in the JS bundle for the browser. 
+This is possible because getStaticProps only runs on the server-side.
+It will never run on the client-side. It won’t even be included in the JS bundle for the browser.
 That means you can write code such as direct database queries without them being sent to browsers.
 */
 export const getStaticProps = async ({ params: { slug } }) => {
