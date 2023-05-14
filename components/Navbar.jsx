@@ -4,6 +4,7 @@ import Cart from "./Cart";
 import { useStateContext } from "@/context/StateContext";
 import style from "../styles/Navbar.module.css";
 import UserModal from "./UserModal";
+import AccountMenu from "./AccountMenu";
 
 const { navbarContainer, logo, cartIcon, navIcons, search, cartItemQty } =
   style;
@@ -33,6 +34,7 @@ const Navbar = () => {
       </div>
 
       {showCart && <Cart />}
+      <AccountMenu />
     </div>
   );
 };
