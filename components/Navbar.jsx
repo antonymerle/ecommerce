@@ -31,10 +31,10 @@ const Navbar = () => {
           <AiOutlineShopping size={24} color="grey" />
           <span className={cartItemQty}>{totalQuantities}</span>
         </button>
+        <AccountMenu />
       </div>
 
       {showCart && <Cart />}
-      <AccountMenu />
     </div>
   );
 };
