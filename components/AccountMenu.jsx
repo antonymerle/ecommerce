@@ -1,4 +1,5 @@
-import * as React from "react";
+import { useState } from "react";
+import { useStateContext } from "@/context/StateContext";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
@@ -13,7 +14,11 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 
 export default function AccountMenu() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const { userSession } = useStateContext();
+  const letter = userSession?.session?.user?.given_name[0].toUpperCase();
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -22,10 +27,8 @@ export default function AccountMenu() {
     setAnchorEl(null);
   };
   return (
-    <React.Fragment>
+    <>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-        <Typography sx={{ minWidth: 100 }}>Contact</Typography>
-        <Typography sx={{ minWidth: 100 }}>Profile</Typography>
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
@@ -35,7 +38,7 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+            <Avatar sx={{ width: 32, height: 32 }}>{letter}</Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -100,6 +103,6 @@ export default function AccountMenu() {
           Logout
         </MenuItem>
       </Menu>
-    </React.Fragment>
+    </>
   );
 }
