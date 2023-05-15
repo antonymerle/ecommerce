@@ -15,7 +15,7 @@ import Settings from "@mui/icons-material/Settings";
 import LoginIcon from "@mui/icons-material/Login";
 import Logout from "@mui/icons-material/Logout";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import signin from "@/pages/auth/signin";
+import Link from "next/link";
 
 const customStyle = {
   fontFamily: [
@@ -122,9 +122,11 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose} style={customStyle}>
-          <Avatar alt /> Mon compte
-        </MenuItem>
+        <Link href={userSession ? "/account" : "/auth/signin"}>
+          <MenuItem style={customStyle}>
+            <Avatar alt /> Mon compte
+          </MenuItem>
+        </Link>
         <Divider />
         <MenuItem onClick={handleClose} style={customStyle}>
           <ListItemIcon>
