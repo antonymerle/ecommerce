@@ -128,12 +128,15 @@ export default function AccountMenu() {
           </MenuItem>
         </Link>
         <Divider />
-        <MenuItem onClick={handleClose} style={customStyle}>
-          <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
-          Mes commandes
-        </MenuItem>
+        <Link href={userSession ? "/orders" : "/auth/signin"}>
+          <MenuItem style={customStyle}>
+            <ListItemIcon>
+              <PersonAdd fontSize="small" />
+            </ListItemIcon>
+            Mes commandes
+          </MenuItem>
+        </Link>
+
         <MenuItem onClick={handleClose} style={customStyle}>
           <ListItemIcon>
             <FavoriteBorderIcon />
