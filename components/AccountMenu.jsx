@@ -12,12 +12,33 @@ import Tooltip from "@mui/material/Tooltip";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
+const customStyle = {
+  fontFamily: [
+    "-apple-system",
+    "BlinkMacSystemFont",
+    "Segoe UI",
+    "Roboto",
+    "Oxygen",
+    "Ubuntu",
+    "Cantarell",
+    "Fira Sans",
+    "Droid Sans",
+    "Helvetica Neue",
+    "sans-serif",
+  ],
+};
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const { userSession } = useStateContext();
   const letter = userSession?.session?.user?.given_name[0].toUpperCase();
+  const fullName =
+    userSession?.session?.user?.given_name +
+    userSession?.session?.user?.family_name;
+  const ppURL = userSession?.session?.user?.profileImage;
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -38,7 +59,9 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>{letter}</Avatar>
+            <Avatar alt={fullName} src={ppURL} sx={{ width: 32, height: 32 }}>
+              {letter}
+            </Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -77,30 +100,27 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>
-          <Avatar /> Profile
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
+        <MenuItem onClick={handleClose} style={customStyle}>
+          <Avatar alt /> Mon compte
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleClose} style={customStyle}>
           <ListItemIcon>
             <PersonAdd fontSize="small" />
           </ListItemIcon>
-          Add another account
+          Mes commandes
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleClose} style={customStyle}>
           <ListItemIcon>
-            <Settings fontSize="small" />
+            <FavoriteBorderIcon />
           </ListItemIcon>
-          Settings
+          Mes favoris
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleClose} style={customStyle}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          Logout
+          Se déconnecter
         </MenuItem>
       </Menu>
     </>
