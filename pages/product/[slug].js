@@ -5,8 +5,8 @@ import { computeTTC } from "@/lib/utils";
 import Ratings from "@/components/Ratings";
 import { Product } from "@/components";
 import Quantity from "@/components/Quantity";
-import { FaHeart } from "react-icons/fa";
 import style from "../../styles/productSlug.module.css";
+import Heart from "@/components/Heart";
 
 const { productNameAndFavoriteContainer } = style;
 
@@ -48,7 +48,7 @@ const ProductDetails = ({ product, products }) => {
         <div className="product-detail-desc">
           <div className={productNameAndFavoriteContainer}>
             <h1>{name}</h1>
-            <FaHeart />
+            <Heart />
           </div>
           {/* TODO : make reviews dynamic */}
           <Ratings product={product} />
