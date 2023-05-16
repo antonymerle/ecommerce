@@ -127,7 +127,9 @@ export default function AccountMenu() {
             <Avatar alt /> Mon compte
           </MenuItem>
         </Link>
+
         <Divider />
+
         <Link href={userSession ? "/orders" : "/auth/signin"}>
           <MenuItem style={customStyle}>
             <ListItemIcon>
@@ -137,12 +139,15 @@ export default function AccountMenu() {
           </MenuItem>
         </Link>
 
-        <MenuItem onClick={handleClose} style={customStyle}>
-          <ListItemIcon>
-            <FavoriteBorderIcon />
-          </ListItemIcon>
-          Mes favoris
-        </MenuItem>
+        <Link href={userSession ? "/favorites" : "/auth/signin"}>
+          <MenuItem style={customStyle}>
+            <ListItemIcon>
+              <FavoriteBorderIcon />
+            </ListItemIcon>
+            Mes favoris
+          </MenuItem>
+        </Link>
+
         {userSession ? menuItemSignout : menuItemSignin}
       </Menu>
     </>
