@@ -81,7 +81,7 @@ export default {
               to: [{type: 'product'}],
             },
             {
-              title: 'isFaved',
+              title: 'IsFaved',
               name: 'isFaved',
               type: 'boolean',
             },
