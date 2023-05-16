@@ -11,6 +11,7 @@ export const StateContext = ({ children }) => {
   const [totalQuantities, setTotalQuantities] = useState(0);
   const [qty, setQty] = useState(1);
   const [userRatings, setUserRatings] = useState([]);
+  const [userFavs, setUserFavs] = useState([]);
   const [userSession, setUserSession] = useState(null);
 
   let foundProduct;
@@ -108,6 +109,10 @@ export const StateContext = ({ children }) => {
     setUserRatings(ratedProducts);
   };
 
+  const updateUserFavorites = (favoriteProducts) => {
+    setUserFavs(favoriteProducts);
+  };
+
   const populateUserSession = (sessionObject) => {
     setUserSession(sessionObject);
   };
@@ -130,6 +135,8 @@ export const StateContext = ({ children }) => {
         setTotalPrice,
         setTotalQuantities,
         updateUserRatings,
+        updateUserFavorites,
+        userFavs,
         userRatings,
         populateUserSession,
         userSession,
