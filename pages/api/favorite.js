@@ -22,9 +22,21 @@ export default async (req, res) => {
     if (!emailFromSession)
       return res.status(403).json({ error: "User not found" });
 
-    const user = await client.fetch(groqQuery, {
+    /* Important : USE getDocument to retrieve user data in real time OR BUGS due to caching will occur.
+      https://www.sanity.io/docs/js-client#fetch-a-single-document
+      This will fetch a document from the Doc endpoint.
+      This endpoint cuts through any caching/indexing middleware that may involve
+      delayed processing.
+      */
+
+    // Get Document ID
+    const userDocument = await client.fetch(groqQuery, {
       emailFromSession,
     });
+
+    // Get updated user in real time
+
+    const user = await client.getDocument(userDocument._id);
 
     console.log({ user });
 
@@ -32,9 +44,14 @@ export default async (req, res) => {
 
     let isProductAlreadyFaved = false;
 
+    console.log({
+      userFavLength: user.favorites?.filter((p) => p.product._ref == productId)
+        .length,
+    });
+    // TODO : cette condition ne s'applique pas quand on a déjà fav un produit
     if (
-      user.favorites &&
-      user.favorites.filter((p) => p.product._ref == productId).length > 0
+      (await user.favorites?.filter((p) => p.product._ref == productId)
+        .length) > 0
     ) {
       console.log({ userFavorites: user.favorites });
       isProductAlreadyFaved = true;
@@ -43,7 +60,7 @@ export default async (req, res) => {
     console.log({ isProductAlreadyFaved });
     console.log({ favorites: user.favorites });
 
-    if (!isProductAlreadyFaved) {
+    if (isProductAlreadyFaved === false) {
       // Form a new object with the product reference and the rating
       (newFavoriteProduct = {
         product: { _ref: productId, _type: "reference" },
@@ -87,21 +104,27 @@ export default async (req, res) => {
 
       console.log({ favoriteToDelete });
 
-      // const favedProductIndex = user.favorites.findIndex(
-      //   (el) => el.product._ref == productId
-      // );
+      const favedProductIndex = user.favorites.findIndex(
+        (el) => el.product._ref == productId
+      );
 
-      // const favToRemove = [`favorites[${favedProductIndex}]`];
+      const favToRemove = `favorites[${favedProductIndex}]`;
 
       // console.log({ favToRemove });
+
+      const updatedFavorites = user.favorites.filter(
+        (fav) => fav.product._ref != productId
+      );
+
+      console.log({ updatedFavorites });
 
       const deleteQuery = `favorites[_key=="${favoriteToDelete[0]._key}"]`;
 
       console.log(deleteQuery);
       await client
         .patch(user._id)
-        // .set({ favorites: [...updatedFavorites] })
-        .unset([deleteQuery])
+        // .set({ favorites: updatedFavorites })
+        .unset([favToRemove])
         .commit()
         .then((updatedUser) => {
           console.log("New favorite has been removed : ");
@@ -118,4 +141,5 @@ export default async (req, res) => {
   } else {
     res.status(400).end();
   }
+  res.end();
 };
