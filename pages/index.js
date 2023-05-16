@@ -13,15 +13,18 @@ const Home = ({
   footerBanner,
   userSession,
   userRatedProducts,
+  userFavoritesProducts,
 }) => {
-  // console.log({ userRatedProducts });
+  console.log({ userFavoritesProducts });
 
-  const { updateUserRatings, populateUserSession } = useStateContext();
+  const { updateUserRatings, updateUserFavorites, populateUserSession } =
+    useStateContext();
 
   console.log({ userSession });
 
   useEffect(() => {
     updateUserRatings(userRatedProducts);
+    updateUserFavorites(userFavoritesProducts);
     populateUserSession(userSession);
   }, [userRatedProducts, userSession]);
 
@@ -70,6 +73,8 @@ export async function getServerSideProps(context) {
   console.log(user);
 
   const userRatedProducts = (await user?.ratedProducts) ?? [];
+  const userFavoritesProducts = (await user?.favorites) ?? [];
+  // TODO retrieve user favorite products
 
   // console.log({ userRatedProducts });
 
@@ -82,6 +87,7 @@ export async function getServerSideProps(context) {
       footerBanner,
       userSession,
       userRatedProducts,
+      userFavoritesProducts,
     },
   };
 }
