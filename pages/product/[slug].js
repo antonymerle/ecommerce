@@ -48,7 +48,7 @@ const ProductDetails = ({ product, products }) => {
         <div className="product-detail-desc">
           <div className={productNameAndFavoriteContainer}>
             <h1>{name}</h1>
-            <Heart />
+            <Heart productId={product._id} />
           </div>
           {/* TODO : make reviews dynamic */}
           <Ratings product={product} />
