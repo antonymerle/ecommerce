@@ -17,6 +17,8 @@ export default async (req, res) => {
 
     const emailFromSession = userSession?.session?.user?.email ?? "";
 
+    console.log({ emailFromSession });
+
     if (!emailFromSession)
       return res.status(403).json({ error: "User not found" });
 
@@ -24,16 +26,17 @@ export default async (req, res) => {
       emailFromSession,
     });
 
+    console.log({ user });
+
     let newFavoriteProduct = null;
 
     let isProductAlreadyFaved = false;
-
-    // console.log(user.favorites);
 
     if (
       user.favorites &&
       user.favorites.filter((p) => p.product._ref == productId).length > 0
     ) {
+      console.log({ userFavorites: user.favorites });
       isProductAlreadyFaved = true;
     }
 
@@ -41,12 +44,6 @@ export default async (req, res) => {
     console.log({ favorites: user.favorites });
 
     if (!isProductAlreadyFaved) {
-      //   // The product has not been rated before, fetch it
-      //   const product = await client.fetch(
-      //     `*[_type == "product" && _id == $productId][0]`,
-      //     { productId }
-      //   );
-
       // Form a new object with the product reference and the rating
       (newFavoriteProduct = {
         product: { _ref: productId, _type: "reference" },
@@ -74,11 +71,21 @@ export default async (req, res) => {
       // remove fav
       console.log("remove fav");
 
-      const updatedFavorites = user.favorites.filter(
-        (fav) => fav.product._ref != productId
-      );
+      let favoriteToDelete = [];
 
-      console.log({ updatedFavorites });
+      for (let fav of user.favorites) {
+        if (String(fav.product._ref) == String(productId)) {
+          console.log(`${fav.product._ref} == ${productId}`);
+
+          favoriteToDelete.push(fav);
+        }
+      }
+
+      console.log({ productId });
+
+      favoriteToDelete.forEach((f) => console.log(f.product));
+
+      console.log({ favoriteToDelete });
 
       // const favedProductIndex = user.favorites.findIndex(
       //   (el) => el.product._ref == productId
@@ -87,9 +94,14 @@ export default async (req, res) => {
       // const favToRemove = [`favorites[${favedProductIndex}]`];
 
       // console.log({ favToRemove });
+
+      const deleteQuery = `favorites[_key=="${favoriteToDelete[0]._key}"]`;
+
+      console.log(deleteQuery);
       await client
         .patch(user._id)
-        .set({ favorites: [...updatedFavorites] })
+        // .set({ favorites: [...updatedFavorites] })
+        .unset([deleteQuery])
         .commit()
         .then((updatedUser) => {
           console.log("New favorite has been removed : ");
