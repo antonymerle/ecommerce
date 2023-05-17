@@ -12,7 +12,7 @@ const { productNameAndFavoriteContainer } = style;
 
 const ProductDetails = ({ product, products }) => {
   const [index, setIndex] = useState(0);
-  const { qty, onAdd, setShowCart } = useStateContext();
+  const { qty, onAdd, setShowCart, userFavs } = useStateContext();
   const { image, name, details, priceHT, tax, inventory } = product;
 
   const handleBuyNow = () => {
@@ -48,7 +48,7 @@ const ProductDetails = ({ product, products }) => {
         <div className="product-detail-desc">
           <div className={productNameAndFavoriteContainer}>
             <h1>{name}</h1>
-            <Heart productId={product._id} />
+            <Heart userFavs={userFavs} productId={product._id} />
           </div>
           {/* TODO : make reviews dynamic */}
           <Ratings product={product} />
