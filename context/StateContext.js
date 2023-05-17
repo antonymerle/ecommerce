@@ -110,7 +110,16 @@ export const StateContext = ({ children }) => {
   };
 
   const updateUserFavorites = (favoriteProducts) => {
-    setUserFavs(favoriteProducts);
+    const merged = [...userFavs, ...favoriteProducts];
+    setUserFavs(Array.from(new Set(merged)));
+  };
+
+  const addUserFavorite = (productId) => {
+    setUserFavs([...userFavs, productId]);
+  };
+
+  const removeUserFavorite = (productId) => {
+    setUserFavs(userFavs.filter((fav) => fav !== productId));
   };
 
   const populateUserSession = (sessionObject) => {
@@ -135,8 +144,10 @@ export const StateContext = ({ children }) => {
         setTotalPrice,
         setTotalQuantities,
         updateUserRatings,
-        updateUserFavorites,
         userFavs,
+        updateUserFavorites,
+        addUserFavorite,
+        removeUserFavorite,
         userRatings,
         populateUserSession,
         userSession,
