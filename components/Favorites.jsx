@@ -1,5 +1,5 @@
 import { useStateContext } from "@/context/StateContext";
-import Product from "./Product";
+import ProductsContainer from "./ProductsContainer";
 
 const Favorites = ({ userFavoritesProducts, userRatedProducts }) => {
   // const [first, setfirst] = useState(second)
@@ -7,15 +7,10 @@ const Favorites = ({ userFavoritesProducts, userRatedProducts }) => {
   const { userSession, userRatings } = useStateContext();
 
   return (
-    <div className="products-container">
-      {userFavoritesProducts?.map((product) => (
-        <Product
-          key={product._id}
-          product={product}
-          userRatedProducts={userRatedProducts}
-        />
-      ))}
-    </div>
+    <ProductsContainer
+      userFavoritesProducts={userFavoritesProducts}
+      userRatedProducts={userRatedProducts}
+    />
   );
 };
 

@@ -1,6 +1,7 @@
 import Product from "../components/Product";
 import FooterBanner from "../components/FooterBanner";
 import UpperBanner from "../components/UpperBanner";
+import ProductsContainer from "@/components/ProductsContainer";
 import { client } from "@/lib/client";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
@@ -35,15 +36,10 @@ const Home = ({
         <h2>Meilleures ventes du moment</h2>
         <p>Découvrez les dernières tendances</p>
       </div>
-      <div className="products-container">
-        {products?.map((product) => (
-          <Product
-            key={product._id}
-            product={product}
-            userRatedProducts={userRatedProducts}
-          />
-        ))}
-      </div>
+      <ProductsContainer
+        userFavoritesProducts={userFavoritesProducts}
+        userRatedProducts={userRatedProducts}
+      />
       <FooterBanner footerBanner={footerBanner && footerBanner[0]} />
     </>
   );
