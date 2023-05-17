@@ -24,7 +24,7 @@ const Home = ({
 
   useEffect(() => {
     updateUserRatings(userRatedProducts);
-    updateUserFavorites(userFavoritesProducts);
+    updateUserFavorites(userFavoritesProducts.map((fav) => fav.product._ref));
     populateUserSession(userSession);
   }, [userRatedProducts, userSession]);
 
@@ -65,18 +65,31 @@ export async function getServerSideProps(context) {
   // handling the non-serializable object throwed by getServerSideProps (sigh)
   userSession = JSON.parse(JSON.stringify(userSession));
 
-  // retrieve this specific user ratings based on his email
-  const user = await client.fetch(
-    `*[_type == "user" && email == "${userSession?.user?.email}"][0]`
+  console.log({ email: userSession?.session?.user?.email });
+
+  /* Important : USE client.getDocument, not use client.fetch to retrieve user data in real time OR BUGS due to caching will occur.
+      https://www.sanity.io/docs/js-client#fetch-a-single-document
+      This will fetch a document from the Doc endpoint.
+      This endpoint cuts through any caching/indexing middleware that may involve
+      delayed processing.
+      */
+  const userDoc = await client.fetch(
+    `*[_type == "user" && email == "${userSession?.session?.user?.email}"][0]`
   );
 
-  console.log(user);
+  let user;
+  if (userDoc) {
+    user = await client.getDocument(userDoc?._id);
+  }
+
+  console.log({ user });
 
   const userRatedProducts = (await user?.ratedProducts) ?? [];
   const userFavoritesProducts = (await user?.favorites) ?? [];
   // TODO retrieve user favorite products
 
   // console.log({ userRatedProducts });
+  console.log({ userFavoritesProducts });
 
   // console.log({ session });
 
