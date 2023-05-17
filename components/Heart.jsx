@@ -12,8 +12,9 @@ const Heart = ({ productId }) => {
     removeUserFavorite,
   } = useStateContext();
 
+  console.log({ userFavs, productId });
+
   useEffect(() => {
-    console.log({ userFavs, productId });
     setIsProductFaved(isFaved(productId));
   }, []);
 
