@@ -1,9 +1,9 @@
 import Product from "./Product";
 
-const ProductsContainer = ({ userFavoritesProducts, userRatedProducts }) => {
+const ProductsContainer = ({ productsArray, userRatedProducts }) => {
   return (
     <div className="products-container">
-      {userFavoritesProducts?.map((product) => (
+      {productsArray?.map((product) => (
         <Product
           key={product._id}
           product={product}

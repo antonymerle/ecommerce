@@ -25,7 +25,7 @@ const Home = ({
 
   useEffect(() => {
     updateUserRatings(userRatedProducts);
-    updateUserFavorites(userFavoritesProducts.map((fav) => fav.product._ref));
+    updateUserFavorites(userFavoritesProducts);
     populateUserSession(userSession);
   }, [userRatedProducts, userSession]);
 
@@ -37,7 +37,7 @@ const Home = ({
         <p>Découvrez les dernières tendances</p>
       </div>
       <ProductsContainer
-        userFavoritesProducts={userFavoritesProducts}
+        productsArray={products}
         userRatedProducts={userRatedProducts}
       />
       <FooterBanner footerBanner={footerBanner && footerBanner[0]} />
@@ -81,7 +81,10 @@ export async function getServerSideProps(context) {
   console.log({ user });
 
   const userRatedProducts = (await user?.ratedProducts) ?? [];
-  const userFavoritesProducts = (await user?.favorites) ?? [];
+
+  // TODO : NEED A TO TURN IT INTO A FLAT ARRAY OF REFS
+  const userFavoritesProducts =
+    (await user?.favorites?.map((fav) => fav.product._ref)) ?? [];
   // TODO retrieve user favorite products
 
   // console.log({ userRatedProducts });

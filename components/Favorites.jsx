@@ -8,7 +8,7 @@ const Favorites = ({ userFavoritesProducts, userRatedProducts }) => {
 
   return (
     <ProductsContainer
-      userFavoritesProducts={userFavoritesProducts}
+      productsArray={userFavoritesProducts}
       userRatedProducts={userRatedProducts}
     />
   );
