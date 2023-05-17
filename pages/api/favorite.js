@@ -76,8 +76,8 @@ export default async (req, res) => {
             console.log("New favorite has been saved : ", productId);
             console.log(updatedUser);
             res.json({
-              result: true,
-              product: product.name,
+              productId,
+              faved: true,
             });
           })
           .catch((error) => {
@@ -130,7 +130,8 @@ export default async (req, res) => {
           console.log("New favorite has been removed : ");
           console.log(updatedUser);
           res.json({
-            result: true,
+            productId,
+            faved: false,
           });
         })
         .catch((error) => {
