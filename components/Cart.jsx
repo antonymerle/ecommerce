@@ -103,7 +103,7 @@ const Cart = () => {
                       <Quantity
                         context="cart"
                         cartItem={item}
-                        inventory={item.quantity}
+                        inventory={item.inventory}
                       />
                     </div>
                     <button
