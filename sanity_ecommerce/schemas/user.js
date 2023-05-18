@@ -89,5 +89,27 @@ export default {
         },
       ],
     },
+    {
+      title: 'Orders',
+      name: 'orders',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {title: 'id', name: 'id', type: 'string'},
+            {title: 'object', name: 'object', type: 'string'},
+            {title: 'amount_discount', name: 'amount_discount', type: 'number'},
+            {title: 'amount_subtotal', name: 'amount_subtotal', type: 'number'},
+            {title: 'amount_tax', name: 'amount_tax', type: 'number'},
+            {title: 'amount_total', name: 'amount_total', type: 'number'},
+            {title: 'currency', name: 'currency', type: 'string'},
+            {title: 'description', name: 'description', type: 'string'},
+            // {title: 'price', name: 'price', type: 'object'},
+            {title: 'quantity', name: 'quantity', type: 'number'},
+          ],
+        },
+      ],
+    },
   ],
 }
