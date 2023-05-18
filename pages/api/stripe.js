@@ -1,9 +1,22 @@
 import { computeTTC } from "@/lib/utils";
+import { client } from "./auth/[...nextauth]";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "./auth/[...nextauth]";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
-  console.log(req.body);
+  // console.log(req.body);
+
+  const rawSession = await getServerSession(req, res, authOptions);
+  // handling the non-serializable object throwed by getServerSideProps (sigh)
+  const userSession = JSON.parse(JSON.stringify(rawSession));
+  console.log("getServerSession");
+  console.log({ userSession });
+
+  const emailFromSession = userSession?.session?.user?.email ?? "";
+
+  console.log({ emailFromSession });
 
   if (req.method === "POST") {
     try {
@@ -42,6 +55,7 @@ export default async function handler(req, res) {
         line_items,
         success_url: `${req.headers.origin}/success`,
         cancel_url: `${req.headers.origin}/?canceled=true`,
+        customer_email: emailFromSession,
       };
 
       const session = await stripe.checkout.sessions.create(params);
