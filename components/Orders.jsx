@@ -1,7 +1,7 @@
-import React from "react";
+import DataTable from "./DataTable";
 
 const Orders = () => {
-  return <div>Orders</div>;
+  return <DataTable />;
 };
 
 export default Orders;
