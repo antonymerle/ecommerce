@@ -1,9 +1,15 @@
 import Stripe from "stripe";
 import { client } from "./auth/[...nextauth]";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "./auth/[...nextauth]";
+import { getToken } from "next-auth/jwt";
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 export default async function handler(req, res) {
+  // 1. retrieve email from user session to record the order later
+  // The email is passed to fulfillOrder()
+
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
     apiVersion: "2022-11-15",
   });
@@ -36,7 +42,11 @@ export default async function handler(req, res) {
 
     switch (event.type) {
       case "checkout.session.completed":
-        const checkoutSessionSucceeded = event.data.object;
+        const emailFromCheckoutSession = event.data.object.customer_email ?? "";
+
+        console.log({ emailFromCheckoutSession });
+        // TODO : stocker cet event en DB. les donnes sont dans event.data.
+
         // Then define and call a function to handle the event payment_intent.succeeded
         console.log("Le client a payé sa commande.");
         console.log({ event });
@@ -50,8 +60,12 @@ export default async function handler(req, res) {
         const lineItems = sessionWithLineItems.line_items;
 
         // Fulfill the purchase && decrement inventory...
-        const response = await fulfillOrder(lineItems);
-        return res.status(200).json(response);
+        const response = await fulfillOrder(
+          emailFromCheckoutSession,
+          lineItems
+        );
+        console.log({ fulfillOrder: response });
+        // return res.status(200).json(response);
 
         break;
       // ... handle other event types
@@ -60,7 +74,7 @@ export default async function handler(req, res) {
     }
 
     // Return a 200 response to acknowledge receipt of the event
-    res.status(200).json({ received: true });
+    res.status(200).json({ checkoutSessionCompleted: true });
   } else {
     res.setHeader("Allow", "POST");
     res.status(405).end("Method Not Allowed");
@@ -83,7 +97,18 @@ const buffer = (req) => {
   });
 };
 
-const fulfillOrder = async (lineItems) => {
+const fulfillOrder = async (emailFromSession, lineItems) => {
+  // 1. record order in database if user is logged
+
+  if (emailFromSession) {
+    const newOrder = lineItems.data;
+    await updateUserWithNewOrders(emailFromSession, newOrder);
+  } else {
+    // TODO : record anyway in another table ???
+    console.log("No email from user session, skipping order recording in DB");
+  }
+
+  // 2. decrement inventory
   console.log("Fulfilling order", lineItems);
 
   const quantityOrdered = lineItems.data[0].quantity;
@@ -111,6 +136,53 @@ const fulfillOrder = async (lineItems) => {
         inventory: productInDB.inventory - quantityOrdered,
       };
     });
+};
+
+// Function to update the user document with new orders
+const updateUserWithNewOrders = async (userEmail, newOrder) => {
+  try {
+    // Fetch the existing user document
+    const existingUser = await client.fetch(
+      `*[_type == "user" && email == $userEmail][0]`,
+      { userEmail }
+    );
+
+    const filteredNewOrders = newOrder.map((order) => {
+      return {
+        id: order.id,
+        object: order.object,
+        amount_discount: order.amount_discount,
+        amount_subtotal: order.amount_subtotal,
+        amount_tax: order.amount_tax,
+        amount_total: order.amount_total,
+        currency: order.currency,
+        description: order.description,
+        // price: newOrder.price,
+        quantity: order.quantity,
+      };
+    });
+
+    // Append the new orders to the existing orders array
+    let updatedOrders = [];
+    if (existingUser.orders?.length > 0) {
+      updatedOrders = [...existingUser.orders, ...filteredNewOrders];
+    } else {
+      updatedOrders = [...filteredNewOrders];
+    }
+
+    console.log({ updatedOrders });
+
+    // Update the user document with the new orders
+    await client
+      .patch(existingUser._id)
+      .setIfMissing({ orders: [] })
+      .set({ orders: updatedOrders })
+      .commit({ autoGenerateArrayKeys: true });
+
+    console.log("User document updated with new orders successfully");
+  } catch (error) {
+    console.error("Error updating user document:", error);
+  }
 };
 
 export const config = {
