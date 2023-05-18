@@ -51,6 +51,7 @@ export default async function handler(req, res) {
         console.log("Le client a payé sa commande.");
         console.log({ event });
         const completedCheckoutSessionId = event.id;
+        const completedCheckoutSessionTimestamp = event.created * 1000; // stripe timestamp is measured in seconds since the Unix epoch.
         // Retrieve the session. If you require line items in the response, you may include them by expanding line_items.
         const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
           event.data.object.id,
@@ -63,6 +64,7 @@ export default async function handler(req, res) {
         // Fulfill the purchase && decrement inventory...
         const response = await fulfillOrder(
           completedCheckoutSessionId,
+          completedCheckoutSessionTimestamp,
           emailFromCheckoutSession,
           lineItems
         );
@@ -101,6 +103,7 @@ const buffer = (req) => {
 
 const fulfillOrder = async (
   completedCheckoutSessionId,
+  completedCheckoutSessionTimestamp,
   emailFromSession,
   lineItems
 ) => {
@@ -110,6 +113,7 @@ const fulfillOrder = async (
     const newOrder = lineItems.data;
     await updateUserWithNewOrders(
       completedCheckoutSessionId,
+      completedCheckoutSessionTimestamp,
       emailFromSession,
       newOrder
     );
@@ -151,6 +155,7 @@ const fulfillOrder = async (
 // Function to update the user document with new orders
 const updateUserWithNewOrders = async (
   completedCheckoutSessionId,
+  completedCheckoutSessionTimestamp,
   userEmail,
   newOrder
 ) => {
@@ -164,6 +169,7 @@ const updateUserWithNewOrders = async (
     const filteredNewOrders = newOrder.map((order) => {
       return {
         command_id: completedCheckoutSessionId,
+        timestamp: completedCheckoutSessionTimestamp,
         line_id: order.id,
         object: order.object,
         amount_discount: order.amount_discount,

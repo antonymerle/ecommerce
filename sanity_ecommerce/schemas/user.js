@@ -98,6 +98,7 @@ export default {
           type: 'object',
           fields: [
             {title: 'Command id', name: 'command_id', type: 'string'},
+            {title: 'Timestamp', name: 'timestamp', type: 'number'},
             {title: 'Line id', name: 'line_id', type: 'string'},
             {title: 'object', name: 'object', type: 'string'},
             {title: 'amount_discount', name: 'amount_discount', type: 'number'},
