@@ -50,6 +50,7 @@ export default async function handler(req, res) {
         // Then define and call a function to handle the event payment_intent.succeeded
         console.log("Le client a payé sa commande.");
         console.log({ event });
+        const completedCheckoutSessionId = event.id;
         // Retrieve the session. If you require line items in the response, you may include them by expanding line_items.
         const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
           event.data.object.id,
@@ -61,6 +62,7 @@ export default async function handler(req, res) {
 
         // Fulfill the purchase && decrement inventory...
         const response = await fulfillOrder(
+          completedCheckoutSessionId,
           emailFromCheckoutSession,
           lineItems
         );
@@ -97,12 +99,20 @@ const buffer = (req) => {
   });
 };
 
-const fulfillOrder = async (emailFromSession, lineItems) => {
+const fulfillOrder = async (
+  completedCheckoutSessionId,
+  emailFromSession,
+  lineItems
+) => {
   // 1. record order in database if user is logged
 
   if (emailFromSession) {
     const newOrder = lineItems.data;
-    await updateUserWithNewOrders(emailFromSession, newOrder);
+    await updateUserWithNewOrders(
+      completedCheckoutSessionId,
+      emailFromSession,
+      newOrder
+    );
   } else {
     // TODO : record anyway in another table ???
     console.log("No email from user session, skipping order recording in DB");
@@ -139,7 +149,11 @@ const fulfillOrder = async (emailFromSession, lineItems) => {
 };
 
 // Function to update the user document with new orders
-const updateUserWithNewOrders = async (userEmail, newOrder) => {
+const updateUserWithNewOrders = async (
+  completedCheckoutSessionId,
+  userEmail,
+  newOrder
+) => {
   try {
     // Fetch the existing user document
     const existingUser = await client.fetch(
@@ -149,7 +163,8 @@ const updateUserWithNewOrders = async (userEmail, newOrder) => {
 
     const filteredNewOrders = newOrder.map((order) => {
       return {
-        id: order.id,
+        command_id: completedCheckoutSessionId,
+        line_id: order.id,
         object: order.object,
         amount_discount: order.amount_discount,
         amount_subtotal: order.amount_subtotal,
@@ -157,7 +172,7 @@ const updateUserWithNewOrders = async (userEmail, newOrder) => {
         amount_total: order.amount_total,
         currency: order.currency,
         description: order.description,
-        // price: newOrder.price,
+        // price: newOrder.price,         // TODO : map the price object to schema
         quantity: order.quantity,
       };
     });

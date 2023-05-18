@@ -97,7 +97,8 @@ export default {
         {
           type: 'object',
           fields: [
-            {title: 'id', name: 'id', type: 'string'},
+            {title: 'Command id', name: 'command_id', type: 'string'},
+            {title: 'Line id', name: 'line_id', type: 'string'},
             {title: 'object', name: 'object', type: 'string'},
             {title: 'amount_discount', name: 'amount_discount', type: 'number'},
             {title: 'amount_subtotal', name: 'amount_subtotal', type: 'number'},
@@ -105,7 +106,7 @@ export default {
             {title: 'amount_total', name: 'amount_total', type: 'number'},
             {title: 'currency', name: 'currency', type: 'string'},
             {title: 'description', name: 'description', type: 'string'},
-            // {title: 'price', name: 'price', type: 'object'},
+            // {title: 'price', name: 'price', type: 'object'},   // TODO : map the price object to schema
             {title: 'quantity', name: 'quantity', type: 'number'},
           ],
         },
