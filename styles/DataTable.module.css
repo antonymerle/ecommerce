@@ -1,0 +1,12 @@
+.ordersContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.orderTable {
+  padding: 2rem 0rem;
+}
