@@ -1,0 +1,12 @@
+.orderDetailsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.title {
+  padding: 2rem 0rem;
+  color: var(--mainText);
+}
