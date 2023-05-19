@@ -166,10 +166,9 @@ const updateUserWithNewOrders = async (
       { userEmail }
     );
 
-    const filteredNewOrders = newOrder.map((order) => {
+    const lines = newOrder.map((order) => {
       return {
-        command_id: completedCheckoutSessionId,
-        timestamp: completedCheckoutSessionTimestamp,
+        _key: order.id,
         line_id: order.id,
         object: order.object,
         amount_discount: order.amount_discount,
@@ -183,22 +182,34 @@ const updateUserWithNewOrders = async (
       };
     });
 
-    // Append the new orders to the existing orders array
-    let updatedOrders = [];
-    if (existingUser.orders?.length > 0) {
-      updatedOrders = [...existingUser.orders, ...filteredNewOrders];
-    } else {
-      updatedOrders = [...filteredNewOrders];
-    }
+    let newOrderDocument = {
+      _type: "order",
+      customer: {
+        _ref: existingUser._id,
+      },
+      command_id: completedCheckoutSessionId,
+      timestamp: completedCheckoutSessionTimestamp,
+      items: lines,
+    };
 
-    console.log({ updatedOrders });
+    // Append the new orders to the existing orders array
+    // let updatedOrders = [];
+    // if (existingUser.orders?.length > 0) {
+    //   updatedOrders = [...existingUser.orders, ...filteredNewOrders];
+    // } else {
+    //   updatedOrders = [...filteredNewOrders];
+    // }
+
+    // console.log({ updatedOrders });
 
     // Update the user document with the new orders
-    await client
-      .patch(existingUser._id)
-      .setIfMissing({ orders: [] })
-      .set({ orders: updatedOrders })
-      .commit({ autoGenerateArrayKeys: true });
+    // await client
+    //   .patch(existingUser._id)
+    //   .setIfMissing({ orders: [] })
+    //   .set({ orders: updatedOrders })
+    //   .commit({ autoGenerateArrayKeys: true });
+
+    await client.create(newOrderDocument);
 
     console.log("User document updated with new orders successfully");
   } catch (error) {
