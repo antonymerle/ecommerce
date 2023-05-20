@@ -8,7 +8,12 @@ import { getRowEl } from "@mui/x-data-grid/utils/domUtils";
 import OrderDetails from "./OrderDetails";
 import style from "../styles/DataTable.module.css";
 
-import { getTotal } from "@/lib/utils";
+// import { getTotal } from "@/lib/utils";
+
+const getTotal = (order) =>
+  order.items
+    .map((item) => item.amount_subtotal)
+    .reduce((sum, current) => sum + current, 0) / 100;
 
 const { ordersContainer, orderTable } = style;
 
