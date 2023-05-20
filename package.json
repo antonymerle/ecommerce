@@ -35,5 +35,6 @@
   },
   "devDependencies": {
     "concurrently": "^8.0.1"
-  }
+  },
+  "type": "module"
 }
