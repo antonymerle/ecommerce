@@ -5,7 +5,7 @@ import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import { DataGrid, frFR } from "@mui/x-data-grid";
 import { getRowEl } from "@mui/x-data-grid/utils/domUtils";
-import OrderDetails from "./OrderDetails";
+// import OrderDetails from "./OrderDetails";
 import style from "../styles/DataTable.module.css";
 
 // import { getTotal } from "@/lib/utils";
@@ -89,7 +89,7 @@ export default function DataTable() {
 
   return (
     <div className={ordersContainer}>
-      {isDetailVisible && <OrderDetails orderDetails={selectedOrder} />}
+      {/* {isDetailVisible && <OrderDetails orderDetails={selectedOrder} />} */}
 
       <div className={orderTable} style={{ height: 400, width: "100%" }}>
         <ThemeProvider theme={theme}>
