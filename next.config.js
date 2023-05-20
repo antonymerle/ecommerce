@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  transpilePackages: ["react-hook-mousetrap"],
   reactStrictMode: true,
   images: { domains: ["cdn.sanity.io"] },
   env: {
