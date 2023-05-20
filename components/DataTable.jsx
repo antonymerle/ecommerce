@@ -8,6 +8,8 @@ import { getRowEl } from "@mui/x-data-grid/utils/domUtils";
 import OrderDetails from "./OrderDetails";
 import style from "../styles/DataTable.module.css";
 
+import { getTotal } from "@/lib/utils";
+
 const { ordersContainer, orderTable } = style;
 
 const columns = [
@@ -23,11 +25,6 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: "center",
   color: theme.palette.text.secondary,
 }));
-
-export const getTotal = (order) =>
-  order.items
-    .map((item) => item.amount_subtotal)
-    .reduce((sum, current) => sum + current, 0) / 100;
 
 const theme = createTheme(
   {
