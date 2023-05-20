@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ["react-hook-mousetrap"],
+  transpilePackages: [
+    "@mui/icons-material",
+    "@mui/material",
+    "@mui/x-data-grid",
+  ],
   reactStrictMode: true,
   images: { domains: ["cdn.sanity.io"] },
   env: {
