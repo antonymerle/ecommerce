@@ -50,7 +50,7 @@ export default function SignUp() {
 
     // Check if email is valid
     if (!/\S+@\S+\.\S+/.test(email)) {
-      setEmailError("Please enter a valid email address");
+      setEmailError("Entre une adresse email valide, svp.");
       return;
     } else {
       setEmailError("");
