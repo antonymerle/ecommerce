@@ -212,11 +212,18 @@ export const authOptions = {
       });
 
       if (userinDB.length) {
-        const { given_name, family_name, email, profileImage, role } =
+        const { given_name, family_name, email, profileImage, role, provider } =
           userinDB[0];
         return {
           session: {
-            user: { given_name, family_name, email, profileImage, role },
+            user: {
+              given_name,
+              family_name,
+              email,
+              profileImage,
+              role,
+              provider,
+            },
           },
         };
       }
