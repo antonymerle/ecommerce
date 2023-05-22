@@ -1,4 +1,8 @@
-import { AiFillInstagram, AiOutlineTwitter } from "react-icons/ai";
+import {
+  AiFillInstagram,
+  AiOutlineTwitter,
+  AiOutlineLink,
+} from "react-icons/ai";
 import style from "../styles/Footer.module.css";
 
 const { footerContainer, icons } = style;
@@ -7,7 +11,8 @@ const Footer = () => {
   return (
     <div className={footerContainer}>
       <p>
-        {new Date().getFullYear()} Artefacts e-commerce. Tous droits réservés.
+        {new Date().getFullYear()} e-commerce, Antony Merle . Ce site est une
+        boutique de démonstration, tous les produits sont fictifs.
       </p>
       <ul className={icons}>
         <li>
@@ -31,6 +36,18 @@ const Footer = () => {
           >
             <div>
               <AiOutlineTwitter />
+            </div>
+          </a>
+        </li>
+        <li>
+          <a
+            href="http://antonymerle.dev/"
+            target="blank"
+            rel="noopener noreferrer"
+            aria-label="Antony Merle's portfolio website"
+          >
+            <div>
+              <AiOutlineLink />
             </div>
           </a>
         </li>
