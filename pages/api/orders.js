@@ -9,13 +9,11 @@ export default async (req, res) => {
   console.log("getServerSession");
   console.log({ userSession });
   if (userSession && req.method === "GET") {
-    const emailFromSession = userSession?.session?.user?.email ?? "";
+    const userId = userSession?.session?.user?.id ?? "";
 
-    console.log({ emailFromSession });
-    const userQuery = `*[_type == 'user' && email == $email][0]`; // Query to fetch user with matching providerId and their ratedProducts array
+    console.log({ userId });
 
-    if (!emailFromSession)
-      return res.status(403).json({ error: "User not found" });
+    if (!userId) return res.status(403).json({ error: "User not found" });
 
     /* Important : USE getDocument to retrieve user data in real time OR BUGS due to caching will occur.
       https://www.sanity.io/docs/js-client#fetch-a-single-document
@@ -25,13 +23,13 @@ export default async (req, res) => {
       */
 
     // Get Document ID
-    const userDocument = await client.fetch(userQuery, {
-      email: emailFromSession,
-    });
+    // const userDocument = await client.fetch(userQuery, {
+    //   email: emailFromSession,
+    // });
 
-    console.log({ userDocument });
+    // console.log({ userDocument });
 
-    const userId = userDocument._id;
+    // const userId = userDocument._id;
 
     // const ordersQuery = "*[_type == 'order'  && customer._ref == $userId]";
     const ordersQuery = `*[_type == 'order' && !(_id in path("drafts.**")) && customer._ref == $userId]`;

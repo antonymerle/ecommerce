@@ -12,14 +12,14 @@ export default async (req, res) => {
     const { starsNumber, productId } = req.body;
     console.log(starsNumber, productId);
 
-    const groqQuery = `*[_type == "user" && email == $emailFromSession][0]`; // Query to fetch user with matching providerId and their ratedProducts array
+    const groqQuery = `*[_type == "user" && _id == $userId][0]`; // Query to fetch user with matching providerId and their ratedProducts array
 
-    const emailFromSession = userSession?.session?.user?.email ?? "";
+    const userId = userSession?.session?.user?.id ?? "";
 
-    if (!emailFromSession) res.status(403).json({ error: "User not found" });
+    if (!userId) res.status(403).json({ error: "User not found" });
 
     const user = await client.fetch(groqQuery, {
-      emailFromSession,
+      userId,
     });
 
     let newRatedProduct = null;
