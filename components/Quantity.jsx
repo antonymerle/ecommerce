@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { useStateContext } from "@/context/StateContext";
 import { toast } from "react-hot-toast";
@@ -9,7 +12,15 @@ const { quantityDesc, minus, num, plus, disabled } = styles;
 // context parameter is either "cart" or "slug"
 // If context === "cart", cartItem must be provided
 const Quantity = ({ context, cartItem, inventory }) => {
-  const { qty, decQty, incQty, toggleCartItemQuantity } = useStateContext();
+  const { qty, setQty, decQty, incQty, toggleCartItemQuantity } =
+    useStateContext();
+  const { asPath } = useRouter();
+
+  console.log(asPath);
+
+  useEffect(() => {
+    setQty(1);
+  }, [asPath]);
 
   if (context === "cart" && cartItem) {
     return (
