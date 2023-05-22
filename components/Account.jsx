@@ -23,95 +23,83 @@ import { toast } from "react-hot-toast";
 
 const Account = () => {
   const { data: session } = useSession();
-  // const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [authFailureMessage, setAuthFailureMessage] = useState("");
+
   const [formDisabled, setFormDisabled] = useState(true);
 
   const { userSession } = useStateContext();
 
   const ppURL = userSession?.session?.user?.profileImage;
-  const firstName = userSession?.session?.user?.given_name;
-  const lastName = userSession?.session?.user?.family_name;
+  const firstNameFromSession = userSession?.session?.user?.given_name;
+  const lastNameFromSession = userSession?.session?.user?.family_name;
   const provider = userSession?.session?.user?.provider;
-  const email = userSession?.session?.user?.email;
+  const emailFromSession = userSession?.session?.user?.email;
   const letter = userSession?.session?.user?.given_name[0].toUpperCase();
 
   const handleEdit = () => {
-    switch (provider) {
-      case "google":
-        toast.error(
-          "Vos informations sont fournies par votre compte Google et ne sont pas modifiables."
-        );
-        break;
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPassword("");
+    setEmailError("");
+    setPassword("");
 
-      case "facebook":
-        toast.error(
-          "Vos informations sont fournies par votre compte Facebook et ne sont pas modifiables."
-        );
-        break;
-
-      case "credentials":
-        toast.success("Vous pouvez modifier vos informations.");
-        setFormDisabled(false);
-        break;
-
-      default:
-        toast.error("Erreur de session.");
-        break;
-    }
+    setFormDisabled(false);
   };
   const handleSubmit = async (event) => {
+    // Si les champs sont vides, on utilise les valeurs de la session.
+    // Si le mot de passe est vide, on le laisse tel quel. S'il a été modifié, on le vérifie
     event.preventDefault();
+    console.log({ firstName, lastName, email, password, provider });
 
     // Check if email is valid
-    if (!/\S+@\S+\.\S+/.test(email)) {
+    if (!/\S+@\S+\.\S+/.test(email === "" ? emailFromSession : email)) {
       setEmailError("Please enter a valid email address");
       return;
     } else {
       setEmailError("");
     }
 
-    // Check if password meets security requirements
-    // if (!password.match(/^(?=.*[A-Z])(?=.*[!@#$&*]).{8}$/)) {
-    if (password.length < 8) {
+    if (password && password.length < 8) {
       setPasswordError("Le mot de passe doit avoir au moins 8 caractères.");
       return;
     } else {
       setPasswordError("");
     }
 
-    const result = await signIn("credentials", {
-      email,
-      password,
-      formType: "signup",
-      redirect: false,
-      callbackUrl: "/auth/signin?error=Default",
+    const response = await fetch("/api/modify-account", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        firstName: !firstName ? firstNameFromSession : firstName,
+        lastName: !lastName ? lastNameFromSession : lastName,
+        email: !email ? emailFromSession : email,
+        password: !password ? null : password,
+        provider,
+      }),
     });
 
-    console.log({ result });
+    const data = await response.json();
 
-    if (result.status === 200) {
-      Router.push("/");
+    if (data.result === true) {
+      toast.success("Compte mis à jour !");
+      setFormDisabled(true);
     } else {
-      // requête directe du serveur pour obtenir le message d'erreur.
-      const retrieveErrorMessage = await fetch("/api/auth/credentials-signup", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({ email, password, formType: "signup" }),
-      });
-
-      const response = await retrieveErrorMessage.json();
-      console.log(response);
-
-      setAuthFailureMessage(response.error);
+      toast.error(data.error);
+      setFormDisabled(true);
     }
+
+    console.log({ modifyAccount: data });
   };
+
   return (
     <Container component="main" maxWidth="md">
       <CssBaseline />
@@ -123,53 +111,13 @@ const Account = () => {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1 }} src={ppURL}>
+        <Avatar sx={{ m: 1, width: 64, height: 64 }} src={ppURL}>
           {letter}
         </Avatar>
         <Typography component="h1" variant="h5">
           Mon compte
         </Typography>
-        <Box
-          component="form"
-          // onSubmit={handleSubmit}
-          noValidate
-          sx={{ mt: 1 }}
-        >
-          {/* <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            onClick={handleSubmit}
-          >
-            Modifier mes informations
-          </Button> */}
-          {/*
-          <Grid container spacing={2}>
-            <Grid item xs>
-              <Typography component="h3">Nom:</Typography>
-              <Typography component="h3">Nom:</Typography>
-            </Grid>
-
-            <Grid item xs>
-              <Typography component="h3">Prénom:</Typography>
-            </Grid>
-          </Grid>
-
-          <Grid container spacing={2}>
-            <Grid item xs>
-              <Typography component="h3">Nom:</Typography>
-            </Grid>
-
-            <Grid item xs>
-              <Typography component="h3">Prénom:</Typography>
-            </Grid>
-          </Grid>
-
-          <Divider>Ou</Divider>
-          {authFailureMessage && (
-            <Alert severity="error">{authFailureMessage}</Alert>
-          )} */}
+        <Box component="form" noValidate sx={{ mt: 1 }}>
           <Grid container spacing={2}>
             <Grid item md>
               <Typography component="h3">Type de compte: {provider}</Typography>
@@ -186,32 +134,26 @@ const Account = () => {
           </Button>
           <TextField
             margin="normal"
-            // placeholder=""
             required
             fullWidth
             id="firstName"
             label="Prénom"
             name="firstName"
             onChange={(e) => setFirstName(e.target.value)}
-            value={firstName}
+            value={firstName === "" ? firstNameFromSession : firstName}
             disabled={formDisabled}
-            // error={emailError !== ""}
-            // helperText={emailError && emailError}
           />
 
           <TextField
             margin="normal"
-            // placeholder=""
             required
             fullWidth
             id="lastName"
             label="Nom de famille"
             name="lastName"
-            onChange={(e) => setFirstName(e.target.value)}
-            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            value={lastName === "" ? lastNameFromSession : lastName}
             disabled={formDisabled}
-            // error={emailError !== ""}
-            // helperText={emailError && emailError}
           />
 
           <TextField
@@ -223,27 +165,29 @@ const Account = () => {
             label="email"
             name="email"
             onChange={(e) => setEmail(e.target.value)}
-            value={email}
+            value={email === "" ? emailFromSession : email}
             disabled={formDisabled}
-            // error={emailError !== ""}
-            // helperText={emailError && emailError}
+            error={emailError !== ""}
+            helperText={emailError && emailError}
           />
 
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Mot de passe"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={""}
-            disabled={formDisabled}
-            error={passwordError !== ""}
-            helperText={passwordError && passwordError}
-          />
+          {provider === "credentials" && (
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Mot de passe"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              disabled={formDisabled}
+              error={passwordError !== ""}
+              helperText={passwordError && passwordError}
+            />
+          )}
 
           <Button
             type="button"
