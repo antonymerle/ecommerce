@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
   return (
     <div className={layout}>
       <Head>
-        <title>Antony Merle boutique en ligne e-commerce</title>
+        <title>JoliShop e-commerce</title>
         <meta
           name="description"
           content="Modèle de boutique ecommerce. Réalisation sur mesure par Antony Merle, développeur web à Anglet, France"
