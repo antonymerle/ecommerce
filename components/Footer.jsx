@@ -11,8 +11,8 @@ const Footer = () => {
   return (
     <div className={footerContainer}>
       <p>
-        {new Date().getFullYear()} e-commerce, Antony Merle . Ce site est une
-        boutique de démonstration, tous les produits sont fictifs.
+        {new Date().getFullYear()} JoliShop e-commerce, Antony Merle . Site de
+        démonstration, les produits présentés sont fictifs.
       </p>
       <ul className={icons}>
         <li>

@@ -15,7 +15,7 @@ const Navbar = () => {
   return (
     <div className={navbarContainer}>
       <p className={logo}>
-        <Link href="/">E-commerce</Link>
+        <Link href="/">JoliShop</Link>
       </p>
 
       <div className={navIcons}>
