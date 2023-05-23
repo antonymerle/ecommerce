@@ -8,26 +8,11 @@ const nextConfig = {
   reactStrictMode: true,
   images: { domains: ["cdn.sanity.io"] },
   env: {
-    NEXT_STRIPE_PUBLISHABLE_KEY:
-      process.env.NODE_ENV === "production"
-        ? process.env.PROD_NEXT_STRIPE_PUBLISHABLE_KEY
-        : process.env.NEXT_STRIPE_PUBLISHABLE_KEY,
-    STRIPE_SECRET_KEY:
-      process.env.NODE_ENV === "production"
-        ? process.env.PROD_STRIPE_SECRET_KEY
-        : process.env.STRIPE_SECRET_KEY,
-    STRIPE_FREE_SHIPPING:
-      process.env.NODE_ENV === "production"
-        ? process.env.PROD_STRIPE_FREE_SHIPPING
-        : process.env.STRIPE_FREE_SHIPPING,
-    STRIPE_FAST_SHIPPING:
-      process.env.NODE_ENV === "production"
-        ? process.env.PROD_STRIPE_FAST_SHIPPING
-        : process.env.STRIPE_FAST_SHIPPING,
-    STRIPE_WEBHOOK_SECRET:
-      process.env.NODE_ENV === "production"
-        ? process.env.PROD_STRIPE_WEBHOOK_SECRET
-        : process.env.STRIPE_WEBHOOK_SECRET,
+    NEXT_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_STRIPE_PUBLISHABLE_KEY,
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+    STRIPE_FREE_SHIPPING: process.env.STRIPE_FREE_SHIPPING,
+    STRIPE_FAST_SHIPPING: process.env.STRIPE_FAST_SHIPPING,
+    STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
     NEXT_PUBLIC_SANITY_TOKEN: process.env.NEXT_PUBLIC_SANITY_TOKEN,
     SANITY_PROJECT_ID: process.env.SANITY_PROJECT_ID,
     SANITY_TITLE: process.env.SANITY_TITLE,
@@ -40,7 +25,7 @@ const nextConfig = {
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     BASE_DOMAIN_URL:
       process.env.NODE_ENV === "production"
-        ? "https://ecommerce-chi-kohl.vercel.app"
+        ? "https://jolishop.vercel.app"
         : "http://localhost:3000",
     CONTACT_ORDERS: process.env.CONTACT_ORDERS,
   },
