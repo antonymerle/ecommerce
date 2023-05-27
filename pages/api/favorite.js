@@ -13,13 +13,13 @@ export default async (req, res) => {
     const { productId } = req.body;
     console.log(productId);
 
-    const groqQuery = `*[_type == "user" && email == $emailFromSession][0]`; // Query to fetch user with matching providerId and their ratedProducts array
+    const groqQuery = `*[_type == "user" && _id == $idFromSession][0]`; // Query to fetch user with matching providerId and their ratedProducts array
 
-    const emailFromSession = userSession?.session?.user?.email ?? "";
+    const idFromSession = userSession?.session?.user?.id ?? "";
 
-    console.log({ emailFromSession });
+    console.log({ idFromSession });
 
-    if (!emailFromSession)
+    if (!idFromSession)
       return res.status(403).json({ error: "User not found" });
 
     /* Important : USE getDocument to retrieve user data in real time OR BUGS due to caching will occur.
@@ -31,7 +31,7 @@ export default async (req, res) => {
 
     // Get Document ID
     const userDocument = await client.fetch(groqQuery, {
-      emailFromSession,
+      idFromSession,
     });
 
     // Get updated user in real time

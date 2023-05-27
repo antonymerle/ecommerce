@@ -15,11 +15,11 @@ const Navbar = () => {
   return (
     <div className={navbarContainer}>
       <p className={logo}>
-        <Link href="/">Artefacts e-commerce</Link>
+        <Link href="/">JoliShop</Link>
       </p>
 
       <div className={navIcons}>
-        <UserModal />
+        {/* <UserModal /> */}
         <Link href={"/search"} className={search}>
           Rechercher
         </Link>

@@ -72,7 +72,7 @@ export default function AccountMenu() {
   return (
     <>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-        <Tooltip title="Account settings">
+        <Tooltip title="Menu utilisateur">
           <IconButton
             onClick={handleClick}
             size="small"
@@ -124,7 +124,8 @@ export default function AccountMenu() {
       >
         <Link href={userSession ? "/account" : "/auth/signin"}>
           <MenuItem style={customStyle}>
-            <Avatar alt /> Mon compte
+            <Avatar alt={fullName} src={ppURL} sx={{ width: 32, height: 32 }} />{" "}
+            Mon compte
           </MenuItem>
         </Link>
 

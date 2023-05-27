@@ -50,7 +50,6 @@ const ProductDetails = ({ product, products }) => {
             <h1>{name}</h1>
             <Heart userFavs={userFavs} productId={product._id} />
           </div>
-          {/* TODO : make reviews dynamic */}
           <Ratings product={product} />
           <h4>Détails:</h4>
           <p>{details}</p>
