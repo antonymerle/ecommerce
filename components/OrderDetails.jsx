@@ -13,7 +13,6 @@ const { orderDetailsContainer, title } = style;
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    // backgroundColor: theme.palette.common.black,
     backgroundColor: "#324d67",
     color: theme.palette.common.white,
   },
@@ -51,10 +50,6 @@ function subtotal(items) {
   return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
 }
 
-// const invoiceSubtotal = subtotal(rows);
-// const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-// const invoiceTotal = invoiceTaxes + invoiceSubtotal;
-
 export default function OrderDetails({ orderDetails }) {
   console.log({ orderDetails });
   return (
@@ -64,11 +59,7 @@ export default function OrderDetails({ orderDetails }) {
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="spanning table">
           <TableHead>
-            <StyledTableRow>
-              {/* <StyledTableCell align="center" colSpan={6}>
-              <strong>Détails de la commande</strong>
-            </StyledTableCell> */}
-            </StyledTableRow>
+            <StyledTableRow></StyledTableRow>
             <StyledTableRow>
               <StyledTableCell>
                 <strong>Produit</strong>

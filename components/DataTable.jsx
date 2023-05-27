@@ -1,19 +1,12 @@
 import { useState, useEffect } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Container, Stack } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import { DataGrid, frFR } from "@mui/x-data-grid";
-import { getRowEl } from "@mui/x-data-grid/utils/domUtils";
 import OrderDetails from "./OrderDetails";
 import style from "../styles/DataTable.module.css";
 
 import { getTotal } from "@/lib/utils";
-
-// const getTotal = (order) =>
-//   order.items
-//     .map((item) => item.amount_subtotal)
-//     .reduce((sum, current) => sum + current, 0) / 100;
 
 const { ordersContainer, orderTable } = style;
 
@@ -63,24 +56,9 @@ export default function DataTable() {
         setRows(populatedRows);
       })
     );
-    // const orders = data.json();
-    // console.log(orders);
   }, []);
 
-  // const oneOrder = orders[0]?.items.map((order, i) => {
-  //   return (
-  //     <div className={orderLine}>
-  //       <p>{order.description}</p>
-  //       <p>{order.quantity}</p>
-  //       <p>{order.amount_total}</p>
-  //     </div>
-  //   );
-  // });
-
   const handleRowClick = (orderId) => {
-    // setSelectedRow(orderId);
-    // if (selectedRow === orderId)
-
     setIsDetailVisible(!isDetailVisible);
     const selectedRow = orders.filter((o) => o._id === orderId);
     console.log({ selectedRow });
