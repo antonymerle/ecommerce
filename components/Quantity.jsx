@@ -14,13 +14,11 @@ const { quantityDesc, minus, num, plus, disabled } = styles;
 const Quantity = ({ context, cartItem, inventory }) => {
   const { qty, setQty, decQty, incQty, toggleCartItemQuantity } =
     useStateContext();
+
   const { asPath } = useRouter();
-
-  console.log(asPath);
-
   useEffect(() => {
     setQty(1);
-  }, [asPath]);
+  }, [asPath]); // access the router object and reset qty each time the user navigates to another product page.
 
   if (context === "cart" && cartItem) {
     return (
