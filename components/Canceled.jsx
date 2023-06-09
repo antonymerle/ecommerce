@@ -21,7 +21,7 @@ const Canceled = () => {
         </a>
       </p>
       <Link href="/">
-        <button type="btn" width="300px" className="btn">
+        <button type="button" className="btn">
           Continuer mes achats
         </button>
       </Link>
